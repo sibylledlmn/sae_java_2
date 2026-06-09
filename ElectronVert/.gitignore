@@ -22,3 +22,7 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# former services classes, only used for reference of the new version of the project
+
+  src/main/java/fr/electronvert/facturation/service/
