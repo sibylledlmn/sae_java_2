@@ -23,6 +23,8 @@
 hs_err_pid*
 replay_pid*
 
-# former services classes, only used for reference of the new version of the project
-
-  src/main/java/fr/electronvert/facturation/service/
+a# Console layer - kept locally for reference only, replaced by servlets and FreeMarker
+src/main/java/fr/electronvert/facturation/service/
+src/main/java/fr/electronvert/facturation/controller/
+src/main/java/fr/electronvert/facturation/view/
+src/main/java/fr/electronvert/facturation/test/
