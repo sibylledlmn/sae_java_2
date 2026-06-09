@@ -29,7 +29,6 @@ CREATE TABLE tarif (
 
 CREATE TABLE contrat (
     id                             INT          NOT NULL AUTO_INCREMENT,
-    reference                      VARCHAR(20)  NOT NULL UNIQUE,
     client_id                      INT          NOT NULL,
     adresse_postale                VARCHAR(255) NOT NULL,
     offre_tarifaire                VARCHAR(20)  NOT NULL,
@@ -39,7 +38,6 @@ CREATE TABLE contrat (
     statut                         VARCHAR(20)  NOT NULL DEFAULT 'ACTIF',
     date_souscription              DATE         NOT NULL,
     date_fin                       DATE         NULL,
-    numero_compteur                VARCHAR(50)  NULL,
     frais_changement_offre_attente DECIMAL(8,2) NOT NULL DEFAULT 0.00,
     solde_crediteur                DECIMAL(8,2) NOT NULL DEFAULT 0.00,
     facturation_terminee           BOOLEAN      NOT NULL DEFAULT FALSE,
