@@ -1,105 +1,127 @@
 package fr.electronvert.facturation.model.utilisateur;
 
+import fr.electronvert.facturation.model.contrat.Contrat;
 import fr.electronvert.facturation.util.ValidationFormat;
 
-/**
- * Classe abstraite représentant un utilisateur du système ElectronVert.
- * <p>
- * Un utilisateur possède un identifiant (id), un nom, un prénom et une adresse email.
- * Cette classe est destinée à être héritée par des utilisateurs concrets
- * comme {@code Client} ou {@code Administrateur}.
- * </p>
- */
-public abstract class Utilisateur {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-    /**
-     * Identifiant unique de l'utilisateur.
-     */
+public class Utilisateur {
+
+    private static final String DOMAINE_EMAIL_ADMIN = "@electronvert.fr";
+    private static int compteurClients = 1;
+    private static int compteurAdmins = 1;
+
     protected final String id;
-
-    /**
-     * Nom de l'utilisateur.
-     */
     protected String nom;
-
-    /**
-     * Prénom de l'utilisateur.
-     */
     protected String prenom;
-
-    /**
-     * Adresse email de l'utilisateur.
-     */
     protected String email;
+    private String motDePasse;
+    private final RoleUtilisateur role;
+    private final List<Contrat> contrats = new ArrayList<>();
 
-    /**
-     * Construit un utilisateur avec les informations fournies.
-     * <p>
-     * Les paramètres sont validés avant l'initialisation :
-     * <ul>
-     *     <li>Le nom et le prénom ne doivent pas être vides</li>
-     *     <li>L'email doit respecter un format valide</li>
-     * </ul>
-     *
-     *
-     * @param id identifiant unique de l'utilisateur
-     * @param nom nom de l'utilisateur
-     * @param prenom prénom de l'utilisateur
-     * @param email adresse email de l'utilisateur
-     *
-     * @throws IllegalArgumentException si les données fournies sont invalides
-     */
-    protected Utilisateur(String id, String nom, String prenom, String email) {
+    // Constructeur principal (génère l'id automatiquement)
+    public Utilisateur(String nom, String prenom, String email, RoleUtilisateur role) {
         ValidationFormat.verifierNonVide(nom, "Nom");
         ValidationFormat.verifierNonVide(prenom, "Prénom");
         ValidationFormat.verifierEmail(email);
+
+        if (role == null) {
+            throw new IllegalArgumentException("Le rôle est obligatoire");
+        }
+        if (role == RoleUtilisateur.ADMINISTRATEUR
+                && !email.toLowerCase().endsWith(DOMAINE_EMAIL_ADMIN)) {
+            throw new IllegalArgumentException(
+                    "L'adresse email d'un administrateur doit se terminer par " + DOMAINE_EMAIL_ADMIN
+            );
+        }
+
+        this.id = genererIdPourRole(role);
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.role = role;
+    }
+
+    // Constructeur pour reconstruction depuis la BDD (id connu)
+    public Utilisateur(String id, String nom, String prenom, String email, RoleUtilisateur role) {
+        ValidationFormat.verifierNonVide(id, "Id");
+        ValidationFormat.verifierNonVide(nom, "Nom");
+        ValidationFormat.verifierNonVide(prenom, "Prénom");
+        ValidationFormat.verifierEmail(email);
+
+        if (role == null) {
+            throw new IllegalArgumentException("Le rôle est obligatoire");
+        }
 
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
+        this.role = role;
     }
 
-    /**
-     * Retourne l'identifiant de l'utilisateur.
-     *
-     * @return identifiant unique
-     */
-    public String getId() {
-        return id;
+    private static String genererIdPourRole(RoleUtilisateur role) {
+        if (role == RoleUtilisateur.CLIENT) {
+            return "CLI-" + compteurClients++;
+        }
+        return "ADM-" + compteurAdmins++;
     }
 
-    /**
-     * Retourne le nom de l'utilisateur.
-     *
-     * @return nom de l'utilisateur
-     */
-    public String getNom() {
-        return nom;
+    // =====================
+    // MÉTHODES MÉTIER
+    // =====================
+
+    public void ajouterContrat(Contrat contrat) {
+        contrats.add(contrat);
     }
 
-    /**
-     * Retourne le prénom de l'utilisateur.
-     *
-     * @return prénom de l'utilisateur
-     */
-    public String getPrenom() {
-        return prenom;
+    public boolean aUnContratActif() {
+        return contrats.stream().anyMatch(Contrat::estActif);
     }
 
-    /**
-     * Retourne l'adresse email de l'utilisateur.
-     *
-     * @return email de l'utilisateur
-     */
-    public String getEmail() {
-        return email;
+    public String getInformationsPersonnelles() {
+        return "ID : " + id + "\n"
+                + "Nom : " + prenom + " " + nom + "\n"
+                + "Email : " + email;
     }
 
-    /**
-     * Retourne le rôle de l'utilisateur dans le système.
-     *
-     * @return rôle de l'utilisateur
-     */
-    public abstract RoleUtilisateur getRole();
+    // =====================
+    // GETTERS
+    // =====================
+
+    public String getId() { return id; }
+    public String getNom() { return nom; }
+    public String getPrenom() { return prenom; }
+    public String getEmail() { return email; }
+    public String getMotDePasse() { return motDePasse; }
+    public RoleUtilisateur getRole() { return role; }
+
+    public List<Contrat> getContrats() {
+        return Collections.unmodifiableList(contrats);
+    }
+
+    // =====================
+    // SETTERS
+    // =====================
+
+    public void setNom(String nom) {
+        ValidationFormat.verifierNonVide(nom, "Nom");
+        this.nom = nom;
+    }
+
+    public void setPrenom(String prenom) {
+        ValidationFormat.verifierNonVide(prenom, "Prénom");
+        this.prenom = prenom;
+    }
+
+    public void setEmail(String email) {
+        ValidationFormat.verifierNonVide(email, "Email");
+        this.email = email;
+    }
+
+    public void setMotDePasse(String motDePasse) {
+        this.motDePasse = motDePasse;
+    }
 }

@@ -5,7 +5,8 @@ import fr.electronvert.facturation.exception.ChangementOffreImpossibleException;
 import fr.electronvert.facturation.model.facture.Facture;
 import fr.electronvert.facturation.model.facture.StatutFacture;
 import fr.electronvert.facturation.model.releve.Releve;
-import fr.electronvert.facturation.model.utilisateur.Client;
+import fr.electronvert.facturation.model.utilisateur.RoleUtilisateur;
+import fr.electronvert.facturation.model.utilisateur.Utilisateur;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class Contrat {
     // LIENS & DONNÉES GÉNÉRALES
     // =====================
 
-    private final Client client;
+    private final Utilisateur client;
     private final String adressePostale;
 
     private OffreTarifaire offreTarifaire;
@@ -87,12 +88,15 @@ public class Contrat {
      * @param modeFacturation mode de facturation
      * @param dateSouscription date de souscription du contrat
      */
-    public Contrat(Client client,
+    public Contrat(Utilisateur client,
                    String adressePostale,
                    OffreTarifaire offreTarifaire,
                    ModeFacturation modeFacturation,
                    LocalDate dateSouscription) {
 
+        if (client.getRole() != RoleUtilisateur.CLIENT) {
+            throw new IllegalArgumentException("Un contrat doit être associé à un client");
+        }
         this.id = UUID.randomUUID();
         this.reference = genererReference(dateSouscription);
         this.client = client;
@@ -121,7 +125,7 @@ public class Contrat {
 
     public UUID getId() { return id; }
     public String getReference() { return reference; }
-    public Client getClient() { return client; }
+    public Utilisateur getClient() { return client; }
     public String getAdressePostale() { return adressePostale; }
     public OffreTarifaire getOffreTarifaire() { return offreTarifaire; }
     public OffreTarifaire getOffreTarifaireFuture() { return offreTarifaireFuture; }
