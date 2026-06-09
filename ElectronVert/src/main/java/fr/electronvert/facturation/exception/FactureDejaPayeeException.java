@@ -11,7 +11,6 @@ import java.time.LocalDate;
  *   <li>la référence de la facture</li>
  *   <li>la date du paiement initial</li>
  * </ul>
- * </p>
  *
  * @author Sibylle Dillmann
  */
@@ -48,11 +47,4 @@ public class FactureDejaPayeeException extends RuntimeException {
         return "La facture " + referenceFacture + " est déjà payée";
     }
 
-    public String getReferenceFacture() {
-        return referenceFacture;
-    }
-
-    public LocalDate getDatePaiementInitial() {
-        return datePaiementInitial;
-    }
 }

@@ -10,7 +10,6 @@ package fr.electronvert.facturation.model.facture;
  * </ul>
  * Depuis le 1er aout 2025 le taux normal est apppliqué pour l'abonnement et la consommation électrique.
  * Nous gardons quand même le taux réduit dans l'énumération en cas de changements ultérieurs.
- * @author Sibylle Dillmann
  */
 
 public enum TauxTVA {
