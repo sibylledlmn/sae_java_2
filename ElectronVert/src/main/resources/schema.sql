@@ -3,7 +3,7 @@
 -- ============================================================
 
 CREATE TABLE utilisateur (
-    id           VARCHAR(50)  NOT NULL,
+    id           INT          NOT NULL AUTO_INCREMENT,
     nom          VARCHAR(100) NOT NULL,
     prenom       VARCHAR(100) NOT NULL,
     email        VARCHAR(255) NOT NULL UNIQUE,
@@ -30,7 +30,7 @@ CREATE TABLE tarif (
 CREATE TABLE contrat (
     id                             INT          NOT NULL AUTO_INCREMENT,
     reference                      VARCHAR(20)  NOT NULL UNIQUE,
-    client_id                      VARCHAR(50)  NOT NULL,
+    client_id                      INT          NOT NULL,
     adresse_postale                VARCHAR(255) NOT NULL,
     offre_tarifaire                VARCHAR(20)  NOT NULL,
     offre_tarifaire_future         VARCHAR(20)  NULL,

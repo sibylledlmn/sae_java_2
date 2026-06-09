@@ -10,10 +10,8 @@ import java.util.List;
 public class Utilisateur {
 
     private static final String DOMAINE_EMAIL_ADMIN = "@electronvert.fr";
-    private static int compteurClients = 1;
-    private static int compteurAdmins = 1;
 
-    protected final String id;
+    private int id;
     protected String nom;
     protected String prenom;
     protected String email;
@@ -21,7 +19,7 @@ public class Utilisateur {
     private final RoleUtilisateur role;
     private final List<Contrat> contrats = new ArrayList<>();
 
-    // Constructeur principal (génère l'id automatiquement)
+    // Constructeur pour création (pas encore d'id, la BDD l'attribuera)
     public Utilisateur(String nom, String prenom, String email, RoleUtilisateur role) {
         ValidationFormat.verifierNonVide(nom, "Nom");
         ValidationFormat.verifierNonVide(prenom, "Prénom");
@@ -37,7 +35,6 @@ public class Utilisateur {
             );
         }
 
-        this.id = genererIdPourRole(role);
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
@@ -45,8 +42,7 @@ public class Utilisateur {
     }
 
     // Constructeur pour reconstruction depuis la BDD (id connu)
-    public Utilisateur(String id, String nom, String prenom, String email, RoleUtilisateur role) {
-        ValidationFormat.verifierNonVide(id, "Id");
+    public Utilisateur(int id, String nom, String prenom, String email, RoleUtilisateur role) {
         ValidationFormat.verifierNonVide(nom, "Nom");
         ValidationFormat.verifierNonVide(prenom, "Prénom");
         ValidationFormat.verifierEmail(email);
@@ -60,13 +56,6 @@ public class Utilisateur {
         this.prenom = prenom;
         this.email = email;
         this.role = role;
-    }
-
-    private static String genererIdPourRole(RoleUtilisateur role) {
-        if (role == RoleUtilisateur.CLIENT) {
-            return "CLI-" + compteurClients++;
-        }
-        return "ADM-" + compteurAdmins++;
     }
 
     // =====================
@@ -91,7 +80,7 @@ public class Utilisateur {
     // GETTERS
     // =====================
 
-    public String getId() { return id; }
+    public int getId() { return id; }
     public String getNom() { return nom; }
     public String getPrenom() { return prenom; }
     public String getEmail() { return email; }
@@ -105,6 +94,8 @@ public class Utilisateur {
     // =====================
     // SETTERS
     // =====================
+
+    public void setId(int id) { this.id = id; }
 
     public void setNom(String nom) {
         ValidationFormat.verifierNonVide(nom, "Nom");
