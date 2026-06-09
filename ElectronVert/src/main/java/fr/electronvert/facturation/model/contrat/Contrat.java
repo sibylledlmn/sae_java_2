@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Représente un contrat d'électricité souscrit par un client.
@@ -33,9 +32,7 @@ public class Contrat {
     // IDENTITÉ
     // =====================
 
-    private final UUID id;
-    private static int compteurContrats = 1;
-    private final String reference;
+    private int id;
 
     // =====================
     // LIENS & DONNÉES GÉNÉRALES
@@ -54,8 +51,6 @@ public class Contrat {
 
     private final LocalDate dateSouscription;
     private LocalDate dateFin;
-
-    private String numeroCompteur; // informatif
 
     // =====================
     // FACTURATION
@@ -97,8 +92,6 @@ public class Contrat {
         if (client.getRole() != RoleUtilisateur.CLIENT) {
             throw new IllegalArgumentException("Un contrat doit être associé à un client");
         }
-        this.id = UUID.randomUUID();
-        this.reference = genererReference(dateSouscription);
         this.client = client;
         this.adressePostale = adressePostale;
         this.offreTarifaire = offreTarifaire;
@@ -108,23 +101,41 @@ public class Contrat {
         this.fraisChangementOffreEnAttente = 0.0;
     }
 
-    /**
-     * Génère une référence unique de contrat.
-     */
-    private String genererReference(LocalDate date) {
-        return String.format(
-                "CTR-%d-%06d",
-                date.getYear(),
-                compteurContrats++
-        );
+    // Constructeur pour reconstruction depuis la BDD (id connu)
+    public Contrat(int id,
+                   Utilisateur client,
+                   String adressePostale,
+                   OffreTarifaire offreTarifaire,
+                   ModeFacturation modeFacturation,
+                   LocalDate dateSouscription,
+                   StatutContrat statut,
+                   OffreTarifaire offreTarifaireFuture,
+                   ModeFacturation modeFacturationFutur,
+                   LocalDate dateFin,
+                   double fraisChangementOffreEnAttente,
+                   double soldeCrediteur,
+                   boolean facturationTerminee) {
+        this.id = id;
+        this.client = client;
+        this.adressePostale = adressePostale;
+        this.offreTarifaire = offreTarifaire;
+        this.modeFacturation = modeFacturation;
+        this.dateSouscription = dateSouscription;
+        this.statut = statut;
+        this.offreTarifaireFuture = offreTarifaireFuture;
+        this.modeFacturationFutur = modeFacturationFutur;
+        this.dateFin = dateFin;
+        this.fraisChangementOffreEnAttente = fraisChangementOffreEnAttente;
+        this.soldeCrediteur = soldeCrediteur;
+        this.facturationTerminee = facturationTerminee;
     }
 
     // =====================
     // GETTERS SIMPLES
     // =====================
 
-    public UUID getId() { return id; }
-    public String getReference() { return reference; }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
     public Utilisateur getClient() { return client; }
     public String getAdressePostale() { return adressePostale; }
     public OffreTarifaire getOffreTarifaire() { return offreTarifaire; }
@@ -539,7 +550,7 @@ public class Contrat {
     public String getDetails() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Référence du contrat : ").append(reference).append("\n");
+        sb.append("Contrat ID : ").append(id).append("\n");
         sb.append("Statut : ").append(statut).append("\n");
         sb.append("Adresse : ").append(adressePostale).append("\n\n");
 
@@ -627,8 +638,8 @@ public class Contrat {
      */
     public String toResume() {
         return String.format(
-                "%s | %s | %s | %s | %s",
-                reference,
+                "%d | %s | %s | %s | %s",
+                id,
                 adressePostale,
                 getLibelleOffreTarifaire(offreTarifaire),
                 getLibelleModeFacturation(modeFacturation),
