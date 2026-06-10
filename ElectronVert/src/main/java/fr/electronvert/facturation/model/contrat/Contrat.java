@@ -363,7 +363,7 @@ public class Contrat {
     public void planifierChangementOffreTarifaire(OffreTarifaire nouvelleOffre) {
         if (nouvelleOffre == this.offreTarifaire) {
             throw new ChangementOffreImpossibleException(
-                    this.reference,
+                    String.valueOf(this.id),
                     this.offreTarifaire.getNom()
             );
         }
@@ -399,7 +399,7 @@ public class Contrat {
     public void planifierChangementModeFacturation(ModeFacturation nouveauMode) {
         if (nouveauMode == this.modeFacturation) {
             throw new ChangementModeFacturationImpossibleException(
-                    this.reference,
+                    String.valueOf(this.id),
                     this.modeFacturation
             );
         }
