@@ -94,12 +94,14 @@ CREATE TABLE facture (
 -- ============================================================
 
 CREATE TABLE paiement (
-    id            INT           NOT NULL AUTO_INCREMENT,
-    facture_id    INT           NOT NULL,
-    date_paiement DATE          NOT NULL,
-    montant_paye  DECIMAL(10,2) NOT NULL,
+    id              INT           NOT NULL AUTO_INCREMENT,
+    facture_id      INT           NULL,
+    echeancier_id   INT           NULL,
+    date_paiement   DATE          NOT NULL,
+    montant_paye    DECIMAL(10,2) NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (facture_id) REFERENCES facture(id)
+    FOREIGN KEY (facture_id) REFERENCES facture(id),
+    FOREIGN KEY (echeancier_id) REFERENCES echeancier(id)
 );
 
 -- ============================================================
