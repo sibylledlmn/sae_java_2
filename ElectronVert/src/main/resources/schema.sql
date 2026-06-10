@@ -118,16 +118,3 @@ CREATE TABLE frais_relance (
     FOREIGN KEY (facture_id) REFERENCES facture(id)
 );
 
--- ============================================================
-
-CREATE TABLE demande_modification_contrat (
-    id                       INT         NOT NULL AUTO_INCREMENT,
-    contrat_id               INT         NOT NULL,
-    type_demande             VARCHAR(50) NOT NULL,
-    date_demande             DATE        NOT NULL,
-    statut                   VARCHAR(20) NOT NULL DEFAULT 'EN_ATTENTE',
-    nouvelle_offre           VARCHAR(20) NULL,
-    nouveau_mode_facturation VARCHAR(20) NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (contrat_id) REFERENCES contrat(id)
-);
