@@ -45,6 +45,8 @@ public class FraisRelance {
      */
     private final double montantTTC;
 
+    private int id;
+
     /**
      * Numéro de la relance (1ère, 2ème, etc.).
      */
@@ -84,9 +86,24 @@ public class FraisRelance {
         this.libelle = "Frais de relance n°" + numeroRelance;
     }
 
+    // Constructeur pour reconstruction depuis la BDD
+    public FraisRelance(int id, int numeroRelance, LocalDate dateRelance,
+                        double montantHT, double montantTVA, double montantTTC) {
+        this.id = id;
+        this.numeroRelance = numeroRelance;
+        this.dateRelance = dateRelance;
+        this.montantHT = montantHT;
+        this.montantTVA = montantTVA;
+        this.montantTTC = montantTTC;
+        this.libelle = "Frais de relance n°" + numeroRelance;
+    }
+
     // =====================
     // GETTERS
     // =====================
+
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
     /**
      * Retourne le montant TTC des frais de relance.
