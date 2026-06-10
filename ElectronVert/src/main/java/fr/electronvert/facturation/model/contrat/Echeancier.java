@@ -1,12 +1,8 @@
 package fr.electronvert.facturation.model.contrat;
 
-import fr.electronvert.facturation.model.facture.Paiement;
 import fr.electronvert.facturation.model.facture.TauxTVA;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Représente un échéancier de facturation pour un contrat.
@@ -31,6 +27,8 @@ public class Echeancier {
     // ATTRIBUTS
     // =====================
 
+    private int id;
+
     /**
      * Date de début de l'échéancier.
      */
@@ -46,11 +44,6 @@ public class Echeancier {
      * Montant HT d'une mensualité.
      */
     private final double montantMensualite;
-
-    /**
-     * Liste des paiements associés aux mensualités.
-     */
-    private final List<Paiement> paiementsMensualite = new ArrayList<>();
 
     /**
      * Indique si l'échéancier peut émettre des mensualités
@@ -84,6 +77,17 @@ public class Echeancier {
         this.nbMensualitesEmises = 0;
         this.peutEmmetreMensualite = true;
         this.termine = false;
+    }
+
+    // Constructeur pour reconstruction depuis la BDD
+    public Echeancier(int id, LocalDate dateDebut, double montantMensualite,
+                      int nbMensualitesEmises, boolean peutEmmetreMensualite, boolean termine) {
+        this.id = id;
+        this.dateDebut = dateDebut;
+        this.montantMensualite = montantMensualite;
+        this.nbMensualitesEmises = nbMensualitesEmises;
+        this.peutEmmetreMensualite = peutEmmetreMensualite;
+        this.termine = termine;
     }
 
     // =====================
@@ -188,30 +192,12 @@ public class Echeancier {
      *
      * @return date de début
      */
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
     public LocalDate getDateDebut() {
         return dateDebut;
     }
 
 
-    // =====================
-    // PAIEMENTS
-    // =====================
-
-    /**
-     * Ajoute un paiement associé à une mensualité.
-     *
-     * @param paiement paiement à ajouter
-     */
-    public void ajouterPaiementMensualite(Paiement paiement) {
-        paiementsMensualite.add(paiement);
-    }
-
-    /**
-     * Retourne la liste des paiements des mensualités.
-     *
-     * @return liste des paiements
-     */
-    public List<Paiement> getPaiementsMensualite() {
-        return Collections.unmodifiableList(paiementsMensualite);
-    }
 }
