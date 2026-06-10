@@ -5,7 +5,6 @@ import fr.electronvert.facturation.model.contrat.Contrat;
 import java.time.LocalDate;
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * Représente un relevé de compteur associé à un contrat.
@@ -21,10 +20,7 @@ public class Releve implements Comparable<Releve> {
     // ATTRIBUTS
     // =====================
 
-    /**
-     * Identifiant unique du relevé.
-     */
-    private final UUID id;
+    private int id;
 
     /**
      * Type de relevé (mensuel, clôture, etc.).
@@ -85,7 +81,6 @@ public class Releve implements Comparable<Releve> {
             throw new IllegalArgumentException("Le type de relevé est obligatoire");
         }
 
-        this.id = UUID.randomUUID();
         this.contrat = contrat;
         this.typeReleve = typeReleve;
         this.dateDeReleve = dateDeReleve;
@@ -111,10 +106,6 @@ public class Releve implements Comparable<Releve> {
             throw new IllegalArgumentException("Le relevé précédent est requis");
         }
 
-        if (!this.contrat.equals(precedent.contrat)) {
-            throw new IllegalArgumentException("Les relevés doivent appartenir au même contrat");
-        }
-
         if (precedent.dateDeReleve.isAfter(this.dateDeReleve)) {
             throw new IllegalArgumentException("Ordre chronologique invalide entre relevés");
         }
@@ -137,11 +128,21 @@ public class Releve implements Comparable<Releve> {
         return consommation;
     }
 
+    // Constructeur pour reconstruction depuis la BDD
+    public Releve(int id, TypeReleve typeReleve, LocalDate dateDeReleve, Map<TypeConso, Double> index) {
+        this.id = id;
+        this.contrat = null;
+        this.typeReleve = typeReleve;
+        this.dateDeReleve = dateDeReleve;
+        this.index = Map.copyOf(index);
+    }
+
     // =====================
     // GETTERS
     // =====================
 
-
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
     public TypeReleve getTypeReleve() {
         return typeReleve;
