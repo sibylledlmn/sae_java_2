@@ -19,9 +19,14 @@ import java.util.*;
 public class Facture implements Comparable<Facture> {
 
     // =====================
+
+    public boolean isContientFraisChangementOffre() {
+        return contientFraisChangementOffre;
+    }
     // IDENTITÉ & LIENS
     // =====================
 
+    private int id;
     private final String reference;
     private final TypeFacture type;
     private final Contrat contrat;
@@ -117,6 +122,26 @@ public class Facture implements Comparable<Facture> {
         this.statut = StatutFacture.EMISE;
 
         contrat.ajouterFacture(this);
+    }
+
+    // Constructeur pour reconstruction depuis la BDD
+    public Facture(int id, String reference, TypeFacture type,
+                   LocalDate dateEmission, LocalDate dateEcheance, LocalDate dateProchaineRelance,
+                   double montantHT, double montantTVA, double montantTTC,
+                   StatutFacture statut, boolean contientFraisChangementOffre) {
+        this.id = id;
+        this.reference = reference;
+        this.type = type;
+        this.contrat = null;
+        this.dateEmission = dateEmission;
+        this.dateEcheance = dateEcheance;
+        this.dateProchaineRelance = dateProchaineRelance;
+        this.montantHT = montantHT;
+        this.montantTVA = montantTVA;
+        this.montantTTC = montantTTC;
+        this.montantsDefinis = true;
+        this.statut = statut;
+        this.contientFraisChangementOffre = contientFraisChangementOffre;
     }
 
     // =====================
@@ -296,6 +321,8 @@ public class Facture implements Comparable<Facture> {
     // GETTERS
     // =====================
 
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
     public String getReference() { return reference; }
     public TypeFacture getType() { return type; }
     public Contrat getContrat() { return contrat; }
