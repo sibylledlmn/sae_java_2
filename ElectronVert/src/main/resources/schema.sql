@@ -17,11 +17,11 @@ CREATE TABLE utilisateur (
 CREATE TABLE tarif (
     id                        INT          NOT NULL AUTO_INCREMENT,
     date_debut                DATE         NOT NULL,
-    prix_kwh_classique        DECIMAL(8,4) NOT NULL,
-    prix_kwh_hp               DECIMAL(8,4) NOT NULL,
-    prix_kwh_hc               DECIMAL(8,4) NOT NULL,
-    prix_abonnement_classique DECIMAL(8,2) NOT NULL,
-    prix_abonnement_hphc      DECIMAL(8,2) NOT NULL,
+    prix_kwh_classique        DOUBLE NOT NULL,
+    prix_kwh_hp               DOUBLE NOT NULL,
+    prix_kwh_hc               DOUBLE NOT NULL,
+    prix_abonnement_classique DOUBLE NOT NULL,
+    prix_abonnement_hphc      DOUBLE NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -38,8 +38,8 @@ CREATE TABLE contrat (
     statut                         VARCHAR(20)  NOT NULL DEFAULT 'ACTIF',
     date_souscription              DATE         NOT NULL,
     date_fin                       DATE         NULL,
-    frais_changement_offre_attente DECIMAL(8,2) NOT NULL DEFAULT 0.00,
-    solde_crediteur                DECIMAL(8,2) NOT NULL DEFAULT 0.00,
+    frais_changement_offre_attente DOUBLE NOT NULL DEFAULT 0.00,
+    solde_crediteur                DOUBLE NOT NULL DEFAULT 0.00,
     facturation_terminee           BOOLEAN      NOT NULL DEFAULT FALSE,
     PRIMARY KEY (id),
     FOREIGN KEY (client_id) REFERENCES utilisateur(id)
@@ -51,7 +51,7 @@ CREATE TABLE echeancier (
     id                    INT          NOT NULL AUTO_INCREMENT,
     contrat_id            INT          NOT NULL,
     date_debut            DATE         NOT NULL,
-    montant_mensualite    DECIMAL(8,2) NOT NULL,
+    montant_mensualite    DOUBLE NOT NULL,
     nb_mensualites_emises INT          NOT NULL DEFAULT 0,
     termine               BOOLEAN      NOT NULL DEFAULT FALSE,
     PRIMARY KEY (id),
@@ -65,9 +65,9 @@ CREATE TABLE releve (
     contrat_id  INT           NOT NULL,
     type_releve VARCHAR(20)   NOT NULL,
     date_releve DATE          NOT NULL,
-    index_total DECIMAL(10,2) NULL,
-    index_hp    DECIMAL(10,2) NULL,
-    index_hc    DECIMAL(10,2) NULL,
+    index_total DOUBLE NULL,
+    index_hp    DOUBLE NULL,
+    index_hc    DOUBLE NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (contrat_id) REFERENCES contrat(id)
 );
@@ -82,9 +82,9 @@ CREATE TABLE facture (
     date_emission                   DATE          NOT NULL,
     date_echeance                   DATE          NOT NULL,
     date_prochaine_relance          DATE          NULL,
-    montant_ht                      DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-    montant_tva                     DECIMAL(10,2) NOT NULL DEFAULT 0.00,
-    montant_ttc                     DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    montant_ht                      DOUBLE NOT NULL DEFAULT 0.00,
+    montant_tva                     DOUBLE NOT NULL DEFAULT 0.00,
+    montant_ttc                     DOUBLE NOT NULL DEFAULT 0.00,
     statut                          VARCHAR(20)   NOT NULL DEFAULT 'EMISE',
     contient_frais_changement_offre BOOLEAN       NOT NULL DEFAULT FALSE,
     PRIMARY KEY (id),
@@ -98,7 +98,7 @@ CREATE TABLE paiement (
     facture_id      INT           NULL,
     echeancier_id   INT           NULL,
     date_paiement   DATE          NOT NULL,
-    montant_paye    DECIMAL(10,2) NOT NULL,
+    montant_paye    DOUBLE NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (facture_id) REFERENCES facture(id),
     FOREIGN KEY (echeancier_id) REFERENCES echeancier(id)
@@ -111,9 +111,9 @@ CREATE TABLE frais_relance (
     facture_id     INT          NOT NULL,
     numero_relance INT          NOT NULL,
     date_relance   DATE         NOT NULL,
-    montant_ht     DECIMAL(8,2) NOT NULL,
-    montant_tva    DECIMAL(8,2) NOT NULL,
-    montant_ttc    DECIMAL(8,2) NOT NULL,
+    montant_ht     DOUBLE NOT NULL,
+    montant_tva    DOUBLE NOT NULL,
+    montant_ttc    DOUBLE NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (facture_id) REFERENCES facture(id)
 );
