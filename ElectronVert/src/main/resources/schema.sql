@@ -51,7 +51,6 @@ CREATE TABLE echeancier (
     id                    INT          NOT NULL AUTO_INCREMENT,
     contrat_id            INT          NOT NULL,
     date_debut            DATE         NOT NULL,
-    date_fin              DATE         NOT NULL,
     montant_mensualite    DECIMAL(8,2) NOT NULL,
     nb_mensualites_emises INT          NOT NULL DEFAULT 0,
     termine               BOOLEAN      NOT NULL DEFAULT FALSE,
