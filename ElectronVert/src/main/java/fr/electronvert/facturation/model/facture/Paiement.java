@@ -20,15 +20,7 @@ public class Paiement {
     // IDENTIFIANT
     // =====================
 
-    /**
-     * Compteur utilisé pour générer des références uniques de paiement.
-     */
-    private static int compteur = 0;
-
-    /**
-     * Référence unique du paiement.
-     */
-    private final String id;
+    private int id;
 
     // =====================
     // DONNÉES DU PAIEMENT
@@ -64,23 +56,15 @@ public class Paiement {
             throw new IllegalArgumentException("Le montant payé doit être positif");
         }
 
-        this.id = genererReference();
         this.datePaiement = datePaiement;
         this.montantPaye = montantPaye;
     }
 
-    // =====================
-    // MÉTHODES STATIQUES
-    // =====================
-
-    /**
-     * Génère une référence unique pour un paiement.
-     *
-     * @return référence du paiement
-     */
-    private static String genererReference() {
-        compteur++;
-        return String.format("PAIE-%04d", compteur);
+    // Constructeur pour reconstruction depuis la BDD
+    public Paiement(int id, LocalDate datePaiement, double montantPaye) {
+        this.id = id;
+        this.datePaiement = datePaiement;
+        this.montantPaye = montantPaye;
     }
 
 
@@ -88,6 +72,9 @@ public class Paiement {
     // =====================
     // GETTERS
     // =====================
+
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
 
     /**
@@ -120,7 +107,7 @@ public class Paiement {
     public String getDetails() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Référence du paiement : ").append(id).append("\n");
+        sb.append("Référence du paiement : PAIE-").append(String.format("%04d", id)).append("\n");
         sb.append("Date du paiement : ").append(datePaiement).append("\n");
         sb.append("Montant payé : ")
                 .append(String.format("%.2f €", montantPaye))
@@ -137,7 +124,7 @@ public class Paiement {
      */
     @Override
     public String toString() {
-        return id + " - " + datePaiement + " - "
+        return String.format("PAIE-%04d", id) + " - " + datePaiement + " - "
                 + String.format("%.2f €", montantPaye);
     }
 }
