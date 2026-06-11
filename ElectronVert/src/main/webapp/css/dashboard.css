@@ -1,0 +1,231 @@
+/* ============================================================
+   ElectronVert — Styles spécifiques aux dashboards
+   ============================================================ */
+
+/* =====================
+   GRILLE PRINCIPALE
+===================== */
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 16px;
+}
+
+/* =====================
+   TABLE FACTURES (dashboard client)
+===================== */
+.factures-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.factures-table th {
+    font-size: 11px;
+    font-weight: 600;
+    color: #7a9a82;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: left;
+    padding: 0 0 10px 0;
+    border-bottom: 1px solid #e6f0e8;
+}
+
+.factures-table td {
+    padding: 11px 0;
+    border-bottom: 1px solid #f0f6f2;
+    vertical-align: middle;
+}
+
+.factures-table tr:last-child td { border-bottom: none; }
+
+.facture-ref {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1c2b22;
+}
+
+.facture-contrat {
+    font-size: 11px;
+    color: #7a9a82;
+    margin-top: 2px;
+}
+
+.facture-date {
+    font-size: 12.5px;
+    color: #4a6a52;
+}
+
+.facture-montant {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1c2b22;
+    text-align: right;
+}
+
+.td-badge { text-align: right; }
+
+/* =====================
+   LISTE CONTRATS (dashboard client)
+===================== */
+.contrat-item {
+    padding: 13px 0;
+    border-bottom: 1px solid #f0f6f2;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.contrat-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+.contrat-ref {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1c2b22;
+}
+
+.contrat-adresse {
+    font-size: 12px;
+    color: #5a7a65;
+    margin: 3px 0 6px;
+}
+
+.contrat-badges { display: flex; gap: 5px; flex-wrap: wrap; }
+
+.contrat-meta { text-align: right; flex-shrink: 0; }
+.contrat-meta-label { font-size: 10.5px; color: #7a9a82; margin-bottom: 2px; }
+.contrat-meta-value { font-size: 12.5px; font-weight: 500; color: #1c2b22; }
+
+/* =====================
+   TABLE IMPAYÉES (dashboard admin)
+===================== */
+.impayees-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.impayees-table th {
+    font-size: 11px;
+    font-weight: 600;
+    color: #7a9a82;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: left;
+    padding: 0 0 10px 0;
+    border-bottom: 1px solid #e6f0e8;
+}
+
+.impayees-table th:nth-child(2),
+.impayees-table th:nth-child(3) { text-align: right; }
+
+.impayees-table td {
+    padding: 11px 0;
+    border-bottom: 1px solid #f0f6f2;
+    vertical-align: middle;
+}
+
+.impayees-table tr:last-child td { border-bottom: none; }
+
+.client-name-table {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1c2b22;
+}
+
+.facture-info {
+    font-size: 11px;
+    color: #7a9a82;
+    margin-top: 2px;
+}
+
+.td-right { text-align: right; }
+
+.montant {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1c2b22;
+}
+
+/* =====================
+   DONUT + LÉGENDE (dashboard admin)
+===================== */
+.donut-wrap {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.legend { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+
+.leg-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: #4a6a52;
+}
+
+.leg-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.legend-divider {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #f0f6f2;
+}
+
+.legend-section-label {
+    font-size: 11px;
+    color: #7a9a82;
+    margin-bottom: 6px;
+}
+
+/* =====================
+   CLIENTS RÉCENTS (dashboard admin)
+===================== */
+.clients-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.client-card {
+    border: 1px solid #f0f6f2;
+    border-radius: 8px;
+    padding: 11px 13px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.client-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #dff5e8;
+    color: #1a5a32;
+    font-size: 10px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.client-name-main {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1c2b22;
+}
+
+.client-date {
+    font-size: 11px;
+    color: #7a9a82;
+    margin: 2px 0 5px;
+}
+
+.client-badges { display: flex; gap: 4px; flex-wrap: wrap; }
