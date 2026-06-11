@@ -60,6 +60,7 @@ public class DashboardClientServlet extends HttpServlet {
                 Facture f = factures.get(0);
                 derniereFacture = new FactureViewModel(
                         f.getReference(),
+                        f.getDateEmission().format(fmt),
                         f.getDateEcheance().format(fmt),
                         String.format("%.2f", f.getMontantTTC()).replace(".", ","),
                         f.getStatut(),
@@ -74,7 +75,7 @@ public class DashboardClientServlet extends HttpServlet {
             List<FactureViewModel> factureViewModels = new ArrayList<>();
 
             for (Facture facture : factures) {
-                factureViewModels.add(new FactureViewModel(facture.getReference(), facture.getDateEcheance().format(fmt) , String.format("%.2f", facture.getMontantTTC()).replace(".", ",") ,
+                factureViewModels.add(new FactureViewModel(facture.getReference(), facture.getDateEmission().format(fmt), facture.getDateEcheance().format(fmt) , String.format("%.2f", facture.getMontantTTC()).replace(".", ",") ,
                         facture.getStatut(), facture.getContratId(), contratsParId.get(facture.getContratId()).getAdressePostale()));
             }
 
