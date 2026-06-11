@@ -38,6 +38,8 @@ public class DashboardClientServlet extends HttpServlet {
             return;
         }
         try {
+            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
             List<Contrat> contratsActifs = contratDAO.findActifsByClientId(utilisateur.getId());
             List<Contrat> tousLesContrats = contratDAO.findByClientId(utilisateur.getId());
             List<Facture> facturesImpayees = factureDAO.findImpayeesByClientId(utilisateur.getId());
@@ -53,17 +55,26 @@ public class DashboardClientServlet extends HttpServlet {
             for (Facture facture : facturesImpayees) {
                 totalDu += facture.getMontantTotalTTCAPayer();
             }
-            Facture derniereFacture = null;
+            FactureViewModel derniereFacture = null;
             if(!factures.isEmpty()){
-                derniereFacture = factures.get(0);
+                Facture f = factures.get(0);
+                derniereFacture = new FactureViewModel(
+                        f.getReference(),
+                        f.getDateEcheance().format(fmt),
+                        String.format("%.2f", f.getMontantTTC()).replace(".", ","),
+                        f.getStatut(),
+                        f.getContratId(),
+                        contratsParId.get(f.getContratId()).getAdressePostale()
+                );
             }
             LocalDate prochaineEcheance = facturesImpayees.stream()
                     .map(Facture::getDateEcheance)
                     .min(LocalDate::compareTo)
                     .orElse(null);
             List<FactureViewModel> factureViewModels = new ArrayList<>();
+
             for (Facture facture : factures) {
-                factureViewModels.add(new FactureViewModel(facture.getReference(), facture.getDateEcheance(), facture.getMontantTTC(),
+                factureViewModels.add(new FactureViewModel(facture.getReference(), facture.getDateEcheance().format(fmt) , String.format("%.2f", facture.getMontantTTC()).replace(".", ",") ,
                         facture.getStatut(), facture.getContratId(), contratsParId.get(facture.getContratId()).getAdressePostale()));
             }
 
