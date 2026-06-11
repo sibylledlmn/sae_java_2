@@ -30,6 +30,7 @@ public class Facture implements Comparable<Facture> {
     private final String reference;
     private final TypeFacture type;
     private final Contrat contrat;
+    private int contratId;
 
     // =====================
     // DATES
@@ -128,11 +129,12 @@ public class Facture implements Comparable<Facture> {
     public Facture(int id, String reference, TypeFacture type,
                    LocalDate dateEmission, LocalDate dateEcheance, LocalDate dateProchaineRelance,
                    double montantHT, double montantTVA, double montantTTC,
-                   StatutFacture statut, boolean contientFraisChangementOffre) {
+                   StatutFacture statut, boolean contientFraisChangementOffre, int contratId) {
         this.id = id;
         this.reference = reference;
         this.type = type;
         this.contrat = null;
+        this.contratId = contratId;
         this.dateEmission = dateEmission;
         this.dateEcheance = dateEcheance;
         this.dateProchaineRelance = dateProchaineRelance;
@@ -323,6 +325,7 @@ public class Facture implements Comparable<Facture> {
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
+    public int getContratId() { return contratId; }
     public String getReference() { return reference; }
     public TypeFacture getType() { return type; }
     public Contrat getContrat() { return contrat; }

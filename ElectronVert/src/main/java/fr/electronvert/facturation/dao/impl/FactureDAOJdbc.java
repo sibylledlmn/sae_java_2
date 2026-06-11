@@ -161,6 +161,27 @@ public class FactureDAOJdbc implements FactureDAO {
         return factures;
     }
 
+    @Override
+    public List<Facture> findRecentesByClientId(int clientId, int limite) throws SQLException {
+        List<Facture> factures = new ArrayList<>();
+        String query = "SELECT f.* FROM facture f " +
+                "JOIN contrat c ON f.contrat_id = c.id " +
+                "WHERE c.client_id = ? " +
+                "ORDER BY f.date_emission DESC " +
+                "LIMIT ?";
+        try (Connection co = ConnectionManager.getConnection();
+             PreparedStatement ps = co.prepareStatement(query)) {
+            ps.setInt(1, clientId);
+            ps.setInt(2, limite);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    factures.add(factureFromResultSet(rs));
+                }
+            }
+        }
+        return factures;
+    }
+
     private Facture factureFromResultSet(ResultSet rs) throws SQLException {
         Date dateProchaineRelance = rs.getDate("date_prochaine_relance");
         return new Facture(
@@ -174,7 +195,8 @@ public class FactureDAOJdbc implements FactureDAO {
                 rs.getDouble("montant_tva"),
                 rs.getDouble("montant_ttc"),
                 StatutFacture.valueOf(rs.getString("statut")),
-                rs.getBoolean("contient_frais_changement_offre")
+                rs.getBoolean("contient_frais_changement_offre"),
+                rs.getInt("contrat_id")
         );
     }
 }
