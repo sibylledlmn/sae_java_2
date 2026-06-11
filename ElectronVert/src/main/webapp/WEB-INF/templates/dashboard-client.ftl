@@ -7,8 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/commun.css">
-    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="/css/commun.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
 </head>
 <body>
 
@@ -77,7 +77,7 @@
         <#if facturesImpayees?has_content>
         <div class="alert-bar warning" role="alert">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-            <span>Vous avez <strong>${facturesImpayees?size} factures impayé <#if facturesImpayees?size gt 1>es</#if></strong> — réglez avant le  ${prochaineEcheance} pour éviter des frais de relance.</span>
+            <span>Vous avez <strong>${facturesImpayees?size} factures impayé<#if facturesImpayees?size gt 1>es</#if></strong> — réglez avant le  ${prochaineEcheance} pour éviter des frais de relance.</span>
             <a href="#" class="alert-link">Payer maintenant →</a>
         </div>
         </#if>
@@ -139,13 +139,7 @@
                         <tr>
                             <td><div class="facture-ref">${facture.reference}</div><div class="facture-contrat">
                                 Contrat ${facture.contratId} · ${facture.contratAdresse}</div></td>
-                            <td><span class="facture-date">
-                                <#if facture.statut == "PAYEE">
-                                    Payée le ${facture.datePaiement}
-                                <#else>
-                                    ${facture.dateEcheance}
-                                </#if>
-                            </span></td>
+                            <td><span class="facture-date">${facture.dateEcheance}</span></td>
                             <td class="facture-montant">${facture.montantTTC} €</td>
                             <td class="td-badge">
                                 <#if facture.statut == "PAYEE">
