@@ -92,6 +92,7 @@ public class DashboardClientServlet extends HttpServlet {
             model.put("prochaineEcheance", prochaineEcheance);
             model.put("mois", mois);
             model.put("contratsClotures", contratsClotures);
+            model.put("pageActive", "dashboard");
 
             FreeMarkerUtil.render("dashboard-client.ftl", model, resp);
 
