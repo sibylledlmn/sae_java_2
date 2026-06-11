@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElectronVert - Connexion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/connexion.css">
+    <link rel="stylesheet" href="css/commun.css">
+</head>
+<body>
+
+<div class="login-page">
+    <div class="login-card">
+
+        <!-- Logo -->
+        <div class="login-logo">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1a7a45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <div>
+                <div class="login-logo-text">ElectronVert</div>
+                <div class="login-logo-sub">Espace client &amp; administration</div>
+            </div>
+        </div>
+
+        <div class="login-divider"></div>
+
+        <h2 class="login-title">Connexion</h2>
+        <p class="login-sub">Accédez à votre espace personnel</p>
+
+        <form method="post" action="/connexion">
+
+            <div class="form-group">
+                <label class="form-label" for="email">Identifiant (email)</label>
+                <input
+                        class="form-input"
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="exemple@email.com"
+                        autocomplete="email"
+                        required
+                >
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="mdp">Mot de passe</label>
+                <input
+                        class="form-input"
+                        type="password"
+                        id="mdp"
+                        name="mdp"
+                        placeholder="••••••••"
+                        autocomplete="current-password"
+                        required
+                >
+                <p id="message-erreur" class="form-error">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    Identifiant ou mot de passe incorrects
+                </p>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full" style="margin-top: 8px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                Valider
+            </button>
+
+        </form>
+
+        <div class="login-footer">
+            Un problème de connexion ? Contactez votre administrateur.
+        </div>
+
+    </div>
+</div>
+
+<script src="/js/connexion.js"></script>
+</body>
+</html>

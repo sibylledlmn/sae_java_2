@@ -58,7 +58,9 @@ public class UtilisateurDAOJdbc implements UtilisateurDAO {
             ps.setString(1, email);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new Utilisateur(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), RoleUtilisateur.valueOf(rs.getString("role")));
+                    Utilisateur u = new Utilisateur(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), RoleUtilisateur.valueOf(rs.getString("role")));
+                    u.setMotDePasse(rs.getString("mot_de_passe"));
+                    return u;
                 }
             }
         }
