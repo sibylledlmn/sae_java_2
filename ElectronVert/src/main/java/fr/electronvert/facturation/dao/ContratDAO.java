@@ -23,6 +23,7 @@ public interface ContratDAO {
     List<Contrat> findAFacturer() throws SQLException;
 
     List<Contrat> findActifs() throws SQLException;
+    List<Contrat> findActifsByClientId(int clientId) throws SQLException;
 
 
 

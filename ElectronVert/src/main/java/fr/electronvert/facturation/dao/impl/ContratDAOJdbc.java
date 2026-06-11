@@ -154,6 +154,24 @@ public class ContratDAOJdbc implements ContratDAO {
         return contrats;
     }
 
+    @Override
+    public List<Contrat> findActifsByClientId(int clientId) throws SQLException {
+        List<Contrat> contrats = new ArrayList<>();
+        String query = "SELECT c.*, u.id as u_id, u.nom, u.prenom, u.email, u.role " +
+                "FROM contrat c JOIN utilisateur u ON c.client_id = u.id " +
+                "WHERE c.client_id = ? AND c.statut = 'ACTIF'";
+        try (Connection co = ConnectionManager.getConnection();
+             PreparedStatement ps = co.prepareStatement(query)) {
+            ps.setInt(1, clientId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    contrats.add(contratFromResultSet(rs));
+                }
+            }
+        }
+        return contrats;
+    }
+
     private static OffreTarifaire offreFromString(String nom) {
         return switch (nom) {
             case "OffreClassique" -> new OffreClassique();
