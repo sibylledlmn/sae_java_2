@@ -652,7 +652,7 @@ public class Contrat {
     // =====================
 
 
-    private String getLibelleOffreTarifaire(OffreTarifaire offreTarifaire) {
+    public String getLibelleOffreTarifaire(OffreTarifaire offreTarifaire) {
         if (offreTarifaire instanceof OffreClassique) {
             return "Classique";
         } else if (offreTarifaire instanceof OffreHPHC) {
