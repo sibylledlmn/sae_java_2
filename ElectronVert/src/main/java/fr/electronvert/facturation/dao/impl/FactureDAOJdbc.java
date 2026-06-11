@@ -142,6 +142,25 @@ public class FactureDAOJdbc implements FactureDAO {
 
     }
 
+    @Override
+    public List<Facture> findImpayeesByClientId(int clientId) throws SQLException {
+        List<Facture> factures = new ArrayList<>();
+        String query = "SELECT f.* FROM facture f " +
+                "JOIN contrat c ON f.contrat_id = c.id " +
+                "WHERE c.client_id = ? AND f.statut IN ('EMISE', 'IMPAYEE') " +
+                "ORDER BY f.date_echeance DESC";
+        try (Connection co = ConnectionManager.getConnection();
+             PreparedStatement ps = co.prepareStatement(query)) {
+            ps.setInt(1, clientId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    factures.add(factureFromResultSet(rs));
+                }
+            }
+        }
+        return factures;
+    }
+
     private Facture factureFromResultSet(ResultSet rs) throws SQLException {
         Date dateProchaineRelance = rs.getDate("date_prochaine_relance");
         return new Facture(
