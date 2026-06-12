@@ -55,6 +55,7 @@ public class ContratsClientServlet extends HttpServlet {
             model.put("contratsActifs", contratsActifs);
             model.put("contratsClotures", contratsClotures);
             model.put("tarif", tarifactif);
+            model.put("fmt", DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.FRENCH));
             model.put("pageActive", "contrats");
 
             FreeMarkerUtil.render("mes-contrats.ftl", model, resp);

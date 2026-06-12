@@ -48,7 +48,7 @@
                         <#if contrat.getLibelleOffreTarifaire(contrat.offreTarifaire) == "Classique">
                         <span class="badge gray">Classique</span>
                             <#else>
-                                <span class="badge blue">HP/HCs</span>
+                                <span class="badge blue">HP/HC</span>
                         </#if>
                          <#if contrat.modeFacturation == "REEL">
                              <span class="badge blue">Réel</span>
@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <div class="cc-infos">
-                    <div><div class="ci-label">Souscription</div><div class="ci-value">${contrat.dateSouscription?string("d MMMM yyyy")}</div></div>
+                    <div><div class="ci-label">Souscription</div><div class="ci-value">${contrat.dateSouscription.format(fmt)}</div></div>
                     <div><div class="ci-label">Offre tarifaire</div><div class="ci-value">${contrat.getLibelleOffreTarifaire(contrat.offreTarifaire)}</div></div>
                     <div><div class="ci-label">Mode facturation</div><div class="ci-value">${contrat.getLibelleModeFacturation(contrat.modeFacturation)}</div></div>
                     <div><div class="ci-label">Abonnement</div><div class="ci-value">
@@ -116,7 +116,7 @@
                     </div>
                 </div>
                 <div class="cc-infos clos">
-                    <div><div class="ci-label">Souscription</div><div class="ci-value">${contrat.dateSouscription?string("d MMMM yyyy")}</div></div>
+                    <div><div class="ci-label">Souscription</div><div class="ci-value">${contrat.dateSouscription.format(fmt)}</div></div>
                     <div><div class="ci-label">Date de clôture</div><div class="ci-value">${contrat.dateFin?string("d MMMM yyyy")}</div></div>
                     <div><div class="ci-label">Offre tarifaire</div><div class="ci-value">${contrat.getLibelleOffreTarifaire(contrat.offreTarifaire)}</div></div>
                     <div><div class="ci-label">Mode facturation</div><div class="ci-value">${contrat.getLibelleModeFacturation(contrat.modeFacturation)}</div></div>
