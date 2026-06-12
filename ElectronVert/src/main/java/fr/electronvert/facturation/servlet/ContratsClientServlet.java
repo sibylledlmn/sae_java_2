@@ -70,7 +70,6 @@ public class ContratsClientServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         int contratId = Integer.parseInt(req.getParameter("contratId"));
-        Utilisateur utilisateur = (Utilisateur) req.getSession().getAttribute("utilisateur");
         try {
             if (action.equals("changerOffre")) {
                 OffreTarifaire offreCible;

@@ -156,6 +156,7 @@
         </div>
     </div>
 
+    <script src="/js/client/commun.js"></script>
     <script src="/js/client/contrats.js"></script>
 
 </body>

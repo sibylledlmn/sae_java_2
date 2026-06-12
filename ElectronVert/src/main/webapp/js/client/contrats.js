@@ -3,22 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // TODO : fermer la modale en cliquant sur l'overlay
 
 
-// GESTION DU CHANGEMENT D'ONGLETS'
-
-
-    const tabs = document.querySelectorAll(".tab");
-    const panels = document.querySelectorAll("[role='tabpanel']");
-
-    tabs.forEach(tab => {
-        tab.addEventListener("click", () => {
-            tabs.forEach(t => t.classList.remove("active"));
-            tab.classList.add("active");
-            const panelId = tab.getAttribute("aria-controls");
-            panels.forEach(p => p.classList.add("hidden"));
-            document.getElementById(panelId).classList.remove("hidden");
-
-        });
-    });
+// GESTION DU CHANGEMENT D'ONGLETS
+    initTabs();
 
     // MODALE CHANGEMENT MODE FACTURATION
 

@@ -63,7 +63,7 @@ public class DashboardClientServlet extends HttpServlet {
                         f.getReference(),
                         f.getDateEmission().format(fmt),
                         f.getDateEcheance().format(fmt),
-                        String.format("%.2f", f.getMontantTTC()).replace(".", ","),
+                        String.format("%.2f", f.getMontantTTC()).replace(".", ",") + " €",
                         f.getStatut(),
                         f.getContratId(),
                         contratsParId.get(f.getContratId()).getAdressePostale()

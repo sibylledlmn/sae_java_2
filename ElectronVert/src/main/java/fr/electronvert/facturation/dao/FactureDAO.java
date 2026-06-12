@@ -19,6 +19,7 @@ public interface FactureDAO {
     void updateStatut(int id, StatutFacture statut) throws SQLException;
     void updateDateProchaineRelance(int id, LocalDate date) throws SQLException;
     List<Facture> findNonPayeesByClientId(int clientId) throws SQLException;
+    List<Facture> findAllByClientId(int clientId) throws SQLException;
     List<Facture> findRecentesByClientId(int clientId, int limite) throws SQLException;
 
 }

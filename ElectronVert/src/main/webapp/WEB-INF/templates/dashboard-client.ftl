@@ -53,7 +53,7 @@
             <div class="stat-card">
                 <div class="stat-icon-wrap amber" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
                 <div class="stat-label">Dernière facture</div>
-                <div class="stat-value">${derniereFacture.montantTTC} €</div>
+                <div class="stat-value">${derniereFacture.montantTTC}</div>
                 <div class="stat-sub">Émise le ${derniereFacture.dateEmission}</div>
             </div>
             </#if>
@@ -94,7 +94,7 @@
                             <td><div class="facture-ref">${facture.reference}</div><div class="facture-contrat">
                                 Contrat ${facture.contratId} · ${facture.contratAdresse}</div></td>
                             <td><span class="facture-date">${facture.dateEcheance}</span></td>
-                            <td class="facture-montant">${facture.montantTTC} €</td>
+                            <td class="facture-montant">${facture.montantTTC}</td>
                             <td class="td-badge">
                                 <#if facture.statut == "PAYEE">
                                     <span class="badge green">Payée</span>

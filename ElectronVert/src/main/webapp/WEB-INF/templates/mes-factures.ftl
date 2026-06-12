@@ -26,10 +26,10 @@
     <!-- Barre onglets + filtre -->
     <div class="tabs-bar">
         <div class="tabs" role="tablist">
-            <div class="tab active" role="tab" aria-selected="true" id="tab-toutes">
+            <div class="tab active" role="tab" aria-selected="true" id="tab-toutes" aria-controls="panel-toutes">
                 Toutes <span class="tab-count" id="count-toutes">${factures?size}</span>
             </div>
-            <div class="tab" role="tab" aria-selected="false" id="tab-apayer">
+            <div class="tab" role="tab" aria-selected="false" id="tab-apayer" aria-controls="panel-apayer">
                 À payer <span class="tab-count red" id="count-apayer">${facturesAPayer?size}</span>
             </div>
         </div>
@@ -37,7 +37,9 @@
             <label class="filter-label" for="filtre-contrat">Contrat :</label>
             <select class="filter-select" id="filtre-contrat">
                 <option value="tous">Tous les contrats</option>
-                <!-- #list contrats -->
+            <#list contrats as c>
+                <option value="${c.id}">${c.id} - ${c.adressePostale}</option>
+            </#list>
             </select>
         </div>
     </div>
@@ -59,7 +61,7 @@
                 </thead>
                 <tbody id="tbody-toutes">
                 <#list factures as facture>
-                    <tr>
+                    <tr  data-contrat="${facture.contratId}">
                         <td><div class="f-ref">${facture.reference}</div></td>
                         <td><span class="f-ref">CT-${facture.contratId}</span><br><span class="f-contrat">${facture.contratAdresse}</span></td>
                         <td>${facture.dateEmission}</td>
@@ -145,7 +147,7 @@
                 </thead>
                 <tbody id="tbody-apayer">
                 <#list facturesAPayer as facture>
-                    <tr>
+                    <tr  data-contrat="${facture.contratId}">
                         <td><div class="f-ref">${facture.reference}</div></td>
                         <td><span class="f-ref">CT-${facture.contratId}</span><br><span class="f-contrat">${facture.contratAdresse}</span></td>
                         <td>${facture.dateEmission}</td>
@@ -196,6 +198,7 @@
         <h2 class="modal-title" id="modal-paiement-title">Confirmer le paiement</h2>
         <p class="modal-body">Facture <strong id="paiement-ref"></strong></p>
         <div class="modal-amount" id="paiement-montant"></div>
+        <p id="paiement-erreur" class="hidden" style="color: #c0392b; font-size: 13px;">Le paiement a échoué, veuillez réessayer.</p>
         <div class="modal-footer">
             <button class="btn btn-ghost" id="btn-annuler-paiement">Annuler</button>
             <button class="btn btn-primary" id="btn-confirmer-paiement">
@@ -209,6 +212,7 @@
     </div>
 </div>
 
+<script src="/js/client/commun.js"></script>
 <script src="/js/client/factures.js"></script>
 
 </body>
