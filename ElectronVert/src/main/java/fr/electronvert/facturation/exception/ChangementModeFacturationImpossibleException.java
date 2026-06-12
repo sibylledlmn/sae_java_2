@@ -66,6 +66,8 @@ public class ChangementModeFacturationImpossibleException extends RuntimeExcepti
      * @param modeDemande le mode demandé
      * @param prochaineeDateAutorisee la prochaine date autorisée
      */
+    public LocalDate getProchaineeDateAutorisee() { return prochaineeDateAutorisee; }
+
     public ChangementModeFacturationImpossibleException(
             String referenceContrat,
             ModeFacturation modeActuel,

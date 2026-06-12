@@ -8,6 +8,7 @@ import freemarker.template.TemplateException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Map;
 
 public class FreeMarkerUtil {
@@ -15,9 +16,10 @@ public class FreeMarkerUtil {
     private static Configuration config;
 
     public static void init(ServletContext servletContext){
-        config = new Configuration(Configuration.VERSION_2_3_22);
+        config = new Configuration(Configuration.VERSION_2_3_33);
         config.setTemplateLoader(new WebappTemplateLoader(servletContext,  "/WEB-INF/templates/"));
         config.setDefaultEncoding("UTF-8");
+        config.setLocale(Locale.FRENCH);
     }
 
     public static void render(String templateName, Map<String,Object> dataModel, HttpServletResponse response) throws IOException, TemplateException {

@@ -661,7 +661,7 @@ public class Contrat {
         return offreTarifaire.getClass().getSimpleName();
     }
 
-    private String getLibelleModeFacturation(ModeFacturation modeFacturation) {
+    public String getLibelleModeFacturation(ModeFacturation modeFacturation) {
         return switch (modeFacturation) {
             case REEL -> "Facturation mensuelle au réel";
             case ECHEANCIER -> "Échéancier";
