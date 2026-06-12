@@ -1,0 +1,77 @@
+/* FILTRE */
+.filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+/* INFOS CONTRAT */
+.contrat-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.info-card {
+    background: #fff;
+    border: 1px solid #d6e8dc;
+    border-radius: 10px;
+    padding: 14px 18px;
+}
+
+.info-label {
+    font-size: 10.5px;
+    color: #7a9a82;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 5px;
+}
+
+.info-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1c2b22;
+}
+
+/* TABLE RELEVÉS */
+.rtable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.rtable th {
+    font-size: 11px;
+    font-weight: 600;
+    color: #7a9a82;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: left;
+    padding: 0 0 10px 0;
+    border-bottom: 1px solid #e6f0e8;
+}
+
+.rtable th.right { text-align: right; }
+
+.rtable td {
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f6f2;
+    vertical-align: middle;
+    font-size: 13px;
+    color: #1c2b22;
+}
+
+.rtable tr:last-child td { border-bottom: none; }
+
+.rtable td.right { text-align: right; }
+.rtable td.muted { color: #7a9a82; font-size: 12px; text-align: right; }
+
+/* CONSOMMATION */
+.conso-hp    { color: #1a7a45; font-weight: 500; text-align: right; }
+.conso-hc    { color: #0e7a5a; font-weight: 500; text-align: right; }
+.conso-total { color: #1a7a45; font-weight: 500; text-align: right; }
+
+/* BADGE TEAL */
+.badge.teal { background: #d8f5ed; color: #0e7a5a; }
