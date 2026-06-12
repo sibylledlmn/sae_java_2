@@ -38,7 +38,7 @@ public class ReleveDAOJdbc implements ReleveDAO {
     @Override
     public List<Releve> findByContractId(int contractId) throws SQLException {
         List<Releve> releves = new ArrayList<>();
-        String query = "SELECT * FROM releve WHERE contrat_id = ?";
+        String query = "SELECT * FROM releve WHERE contrat_id = ? ORDER BY date_releve DESC";
         try (Connection co = ConnectionManager.getConnection();
         PreparedStatement ps = co.prepareStatement(query)){
             ps.setInt(1, contractId);
