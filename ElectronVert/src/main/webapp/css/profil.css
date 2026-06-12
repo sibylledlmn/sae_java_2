@@ -1,0 +1,98 @@
+/* FORM WRAP */
+.form-wrap { max-width: 580px; }
+
+/* CARD PROFIL */
+.card { margin-bottom: 12px; }
+
+/* AVATAR */
+.avatar-block {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f0f6f2;
+}
+
+.avatar-big {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: #3ec97a;
+    color: #0f2b1a;
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.avatar-name { font-size: 14px; font-weight: 600; color: #1c2b22; }
+.avatar-sub  { font-size: 12px; color: #7a9a82; margin-top: 3px; }
+
+/* MODE LECTURE */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.info-item.full { grid-column: span 2; }
+
+
+/* FORMULAIRE */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+/* ACCORDÉON MOT DE PASSE */
+.mdp-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 14px 24px;
+    background: #fff;
+    border: 1px solid #d6e8dc;
+    border-radius: 12px;
+    margin-bottom: 4px;
+    transition: background 0.15s;
+}
+
+.mdp-toggle:hover { background: #f6fbf7; }
+
+.mdp-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #1c2b22;
+}
+
+.mdp-toggle-label svg { color: #2a7a4a; }
+
+.mdp-arrow { transition: transform 0.2s; color: #7a9a82; }
+.mdp-toggle.open .mdp-arrow { transform: rotate(180deg); }
+
+.mdp-toggle.open {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: none;
+}
+
+.mdp-form {
+    background: #fff;
+    border: 1px solid #d6e8dc;
+    border-top: none;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    display: none;
+}
+
+.mdp-form.open { display: block; }

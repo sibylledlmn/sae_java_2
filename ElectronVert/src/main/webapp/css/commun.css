@@ -521,6 +521,18 @@ svg {
 /* UTILITAIRE */
 .hidden { display: none !important; }
 
+/* INFO CARDS */
+.info-label {
+    font-size: 10.5px;
+    color: #7a9a82;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 5px;
+}
+
+.info-value { font-size: 14px; font-weight: 500; color: #1c2b22; }
+
    /*GRILLES*/
 
 
