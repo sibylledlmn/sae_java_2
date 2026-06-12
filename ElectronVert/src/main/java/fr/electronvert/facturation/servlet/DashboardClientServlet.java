@@ -42,7 +42,7 @@ public class DashboardClientServlet extends HttpServlet {
 
             List<Contrat> contratsActifs = contratDAO.findActifsByClientId(utilisateur.getId());
             List<Contrat> tousLesContrats = contratDAO.findByClientId(utilisateur.getId());
-            List<Facture> facturesImpayees = factureDAO.findImpayeesByClientId(utilisateur.getId());
+            List<Facture> facturesImpayees = factureDAO.findNonPayeesByClientId(utilisateur.getId());
             List<Facture> factures = factureDAO.findRecentesByClientId(utilisateur.getId(), 5);
             Map<Integer, Contrat> contratsParId = new HashMap<>();
             for (Contrat c : tousLesContrats) {
@@ -59,6 +59,7 @@ public class DashboardClientServlet extends HttpServlet {
             if(!factures.isEmpty()){
                 Facture f = factures.get(0);
                 derniereFacture = new FactureViewModel(
+                        f.getId(),
                         f.getReference(),
                         f.getDateEmission().format(fmt),
                         f.getDateEcheance().format(fmt),
@@ -75,7 +76,7 @@ public class DashboardClientServlet extends HttpServlet {
             List<FactureViewModel> factureViewModels = new ArrayList<>();
 
             for (Facture facture : factures) {
-                factureViewModels.add(new FactureViewModel(facture.getReference(), facture.getDateEmission().format(fmt), facture.getDateEcheance().format(fmt) , String.format("%.2f", facture.getMontantTTC()).replace(".", ",") ,
+                factureViewModels.add(new FactureViewModel(facture.getId(), facture.getReference(), facture.getDateEmission().format(fmt), facture.getDateEcheance().format(fmt) , String.format("%.2f", facture.getMontantTTC()).replace(".", ",") ,
                         facture.getStatut(), facture.getContratId(), contratsParId.get(facture.getContratId()).getAdressePostale()));
             }
 

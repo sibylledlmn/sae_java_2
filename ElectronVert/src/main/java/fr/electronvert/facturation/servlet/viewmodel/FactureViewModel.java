@@ -3,6 +3,7 @@ package fr.electronvert.facturation.servlet.viewmodel;
 import fr.electronvert.facturation.model.facture.StatutFacture;
 
 public class FactureViewModel {
+    private final int id;
     private final String reference;
     private final String dateEmission;
     private final String dateEcheance;
@@ -11,8 +12,9 @@ public class FactureViewModel {
     private final int contratId;
     private final String contratAdresse;
 
-    public FactureViewModel(String reference, String dateEmission, String dateEcheance, String montantTTC,
+    public FactureViewModel(int id, String reference, String dateEmission, String dateEcheance, String montantTTC,
                             StatutFacture statut, int contratId, String contratAdresse) {
+        this.id = id;
         this.reference = reference;
         this.dateEmission = dateEmission;
         this.dateEcheance = dateEcheance;
@@ -22,6 +24,7 @@ public class FactureViewModel {
         this.contratAdresse = contratAdresse;
     }
 
+    public int getId() { return id; }
     public String getReference() { return reference; }
     public String getDateEmission() { return dateEmission; }
     public String getDateEcheance() { return dateEcheance; }

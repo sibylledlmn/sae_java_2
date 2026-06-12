@@ -143,7 +143,7 @@ public class FactureDAOJdbc implements FactureDAO {
     }
 
     @Override
-    public List<Facture> findImpayeesByClientId(int clientId) throws SQLException {
+    public List<Facture> findNonPayeesByClientId(int clientId) throws SQLException {
         List<Facture> factures = new ArrayList<>();
         String query = "SELECT f.* FROM facture f " +
                 "JOIN contrat c ON f.contrat_id = c.id " +
