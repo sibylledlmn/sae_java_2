@@ -28,8 +28,9 @@ public class UtilisateurService {
         if (!nouveauMdp.equals(confirmationMdp)) {
             throw new IllegalArgumentException("Les mots de passe saisis ne correspondent pas.");
         }
-        utilisateur.setMotDePasse(BCrypt.hashpw(nouveauMdp, BCrypt.gensalt()));
-        utilisateurDAO.update(utilisateur);
+        String hash = BCrypt.hashpw(nouveauMdp, BCrypt.gensalt());
+        utilisateur.setMotDePasse(hash);
+        utilisateurDAO.updateMotDePasse(utilisateur.getId(), hash);
     }
 
 }
