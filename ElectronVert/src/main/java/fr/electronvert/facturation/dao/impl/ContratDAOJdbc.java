@@ -99,7 +99,7 @@ public class ContratDAOJdbc implements ContratDAO {
        List<Contrat> contrats = new ArrayList<>();
        String query = "SELECT c.*, u.id as u_id, u.nom, u.prenom, u.email, u.role " +
                "FROM contrat c JOIN utilisateur u ON c.client_id = u.id " +
-               "WHERE c.client_id = ?";
+               "WHERE c.client_id = ? ORDER BY c.date_souscription ASC";
         try (Connection co = ConnectionManager.getConnection();
              PreparedStatement ps = co.prepareStatement(query)) {
             ps.setInt(1, clientId);
