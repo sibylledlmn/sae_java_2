@@ -103,4 +103,15 @@ public class UtilisateurDAOJdbc implements UtilisateurDAO {
             ps.executeUpdate();
         }
     }
+
+    @Override
+    public void updateMotDePasse(int id, String nouveauMotDePasseHash) throws SQLException {
+        String query = "UPDATE utilisateur SET mot_de_passe = ? WHERE id = ?";
+        try (Connection co = ConnectionManager.getConnection();
+             PreparedStatement ps = co.prepareStatement(query)) {
+            ps.setString(1, nouveauMotDePasseHash);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        }
+    }
 }

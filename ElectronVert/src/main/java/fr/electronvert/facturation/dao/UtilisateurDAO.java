@@ -19,4 +19,6 @@ public interface UtilisateurDAO {
 
     void update(Utilisateur utilisateur) throws SQLException;
 
+    void updateMotDePasse(int id, String nouveauMotDePasseHash) throws SQLException;
+
 }
