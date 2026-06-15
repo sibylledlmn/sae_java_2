@@ -38,7 +38,7 @@ public class ContratAvecFacturesImpayeesException extends RuntimeException {
 
     private static String construireMessage(String referenceContrat, List<Facture> factures) {
         double montantTotal = factures.stream()
-                .mapToDouble(Facture::getMontantTotalTTCAPayer)
+                .mapToDouble(Facture::getMontantTTC)
                 .sum();
 
         return String.format(
