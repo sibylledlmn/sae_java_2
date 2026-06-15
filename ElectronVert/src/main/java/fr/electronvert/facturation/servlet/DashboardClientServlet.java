@@ -2,8 +2,11 @@ package fr.electronvert.facturation.servlet;
 
 import fr.electronvert.facturation.dao.ContratDAO;
 import fr.electronvert.facturation.dao.FactureDAO;
+import fr.electronvert.facturation.dao.FraisRelanceDAO;
 import fr.electronvert.facturation.dao.impl.ContratDAOJdbc;
 import fr.electronvert.facturation.dao.impl.FactureDAOJdbc;
+import fr.electronvert.facturation.dao.impl.FraisRelanceDAOJdbc;
+import fr.electronvert.facturation.services.FactureService;
 import fr.electronvert.facturation.model.contrat.Contrat;
 import fr.electronvert.facturation.model.contrat.StatutContrat;
 import fr.electronvert.facturation.model.facture.Facture;
@@ -28,6 +31,7 @@ public class DashboardClientServlet extends HttpServlet {
 
     private final ContratDAO contratDAO = new ContratDAOJdbc();
     private final FactureDAO factureDAO = new FactureDAOJdbc();
+    private final FraisRelanceDAO fraisRelanceDAO = new FraisRelanceDAOJdbc();
 
 
     @Override
@@ -51,9 +55,10 @@ public class DashboardClientServlet extends HttpServlet {
             List<Contrat> contratsClotures = tousLesContrats.stream()
                     .filter(c -> c.getStatut() == StatutContrat.CLOTURE)
                     .toList();
+            FactureService factureService = new FactureService(factureDAO, fraisRelanceDAO);
             double totalDu = 0.0;
             for (Facture facture : facturesImpayees) {
-                totalDu += facture.getMontantTotalTTCAPayer();
+                totalDu += factureService.getTotalMontantAPayerTTCAvecFrais(facture);
             }
             FactureViewModel derniereFacture = null;
             if(!factures.isEmpty()){
@@ -63,7 +68,7 @@ public class DashboardClientServlet extends HttpServlet {
                         f.getReference(),
                         f.getDateEmission().format(fmt),
                         f.getDateEcheance().format(fmt),
-                        String.format("%.2f", f.getMontantTTC()).replace(".", ",") + " €",
+                        f.getMontantTTC(), 0.0,
                         f.getStatut(),
                         f.getContratId(),
                         contratsParId.get(f.getContratId()).getAdressePostale()
@@ -76,7 +81,8 @@ public class DashboardClientServlet extends HttpServlet {
             List<FactureViewModel> factureViewModels = new ArrayList<>();
 
             for (Facture facture : factures) {
-                factureViewModels.add(new FactureViewModel(facture.getId(), facture.getReference(), facture.getDateEmission().format(fmt), facture.getDateEcheance().format(fmt) , String.format("%.2f", facture.getMontantTTC()).replace(".", ",") ,
+                factureViewModels.add(new FactureViewModel(facture.getId(), facture.getReference(), facture.getDateEmission().format(fmt), facture.getDateEcheance().format(fmt),
+                        facture.getMontantTTC(), 0.0,
                         facture.getStatut(), facture.getContratId(), contratsParId.get(facture.getContratId()).getAdressePostale()));
             }
 
