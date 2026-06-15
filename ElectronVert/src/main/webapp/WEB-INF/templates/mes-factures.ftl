@@ -142,6 +142,8 @@
                     <th>Émission</th>
                     <th>Échéance</th>
                     <th class="right">Montant TTC</th>
+                    <th class="right">Frais de relance</th>
+                    <th class="right">Total à payer</th>
                     <th class="right">Action</th>
                 </tr>
                 </thead>
@@ -153,13 +155,15 @@
                         <td>${facture.dateEmission}</td>
                         <td>${facture.dateEcheance}</td>
                         <td class="right">${facture.montantTTC}</td>
+                        <td class="right"><#if (facture.montantFraisRelanceBrut > 0)>${facture.montantFraisRelance}<#else>—</#if></td>
+                        <td class="right">${facture.montantTotalFraisInclus}</td>
                         <td class="right">
                             <div class="f-actions">
 
                                     <button class="btn btn-primary btn-payer"
                                             data-facture-id="${facture.id}"
                                             data-reference="${facture.reference}"
-                                            data-montant="${facture.montantTTC}">
+                                            data-montant="${facture.montantTotalFraisInclus}">
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
                                              stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                              stroke-linejoin="round" aria-hidden="true">
