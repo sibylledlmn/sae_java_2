@@ -96,7 +96,7 @@
                                         Payer
                                     </button>
                                 </#if>
-                                <button class="btn btn-outline">
+                                <a href="/client/factures/pdf?factureId=${facture.id}" class="btn btn-outline">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                          aria-hidden="true">
@@ -105,7 +105,7 @@
                                         <line x1="12" y1="15" x2="12" y2="3"/>
                                     </svg>
                                     PDF
-                                </button>
+                                </a>
                             </div>
                         </td>
                     </tr>
@@ -177,7 +177,7 @@
                                         Payer
                                     </button>
 
-                                <button class="btn btn-outline">
+                                <a href="/client/factures/pdf?factureId=${facture.id}" class="btn btn-outline">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                          aria-hidden="true">
@@ -186,7 +186,7 @@
                                         <line x1="12" y1="15" x2="12" y2="3"/>
                                     </svg>
                                     PDF
-                                </button>
+                                </a>
                             </div>
                         </td>
                     </tr>

@@ -19,13 +19,15 @@ public class FactureService {
     }
 
     public double getTotalMontantAPayerTTCAvecFrais(Facture facture) throws SQLException {
-        List<FraisRelance> listeFraisFacture = fraisRelanceDAO.findByFactureId(facture.getId());
-        double totalTTCMontantFrais = 0;
-        for (FraisRelance fraisRelance : listeFraisFacture) {
-            totalTTCMontantFrais += fraisRelance.getMontantTTC();
-        }
-        return totalTTCMontantFrais + facture.getMontantTTC();
+        return getTotauxFrais(facture).getTtc() + facture.getMontantTTC();
+    }
 
+    public TotauxFraisRelance getTotauxFrais(Facture facture) throws SQLException {
+        List<FraisRelance> frais = fraisRelanceDAO.findByFactureId(facture.getId());
+        double ht  = frais.stream().mapToDouble(FraisRelance::getMontantHT).sum();
+        double tva = frais.stream().mapToDouble(FraisRelance::getMontantTVA).sum();
+        double ttc = frais.stream().mapToDouble(FraisRelance::getMontantTTC).sum();
+        return new TotauxFraisRelance(ht, tva, ttc);
     }
 
 }
