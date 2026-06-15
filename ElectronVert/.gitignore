@@ -23,7 +23,21 @@
 hs_err_pid*
 replay_pid*
 
-a# Console layer - kept locally for reference only, replaced by servlets and FreeMarker
+# Build
+target/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Credentials BDD
+src/main/resources/db.properties
+
+# HTML de maquette (fichiers locaux uniquement)
+*.html
+docs/
+
+# Console layer - kept locally for reference only, replaced by servlets and FreeMarker
 src/main/java/fr/electronvert/facturation/service/
 src/main/java/fr/electronvert/facturation/controller/
 src/main/java/fr/electronvert/facturation/view/
