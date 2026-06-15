@@ -54,12 +54,15 @@ public class FactureClientServlet extends HttpServlet {
 
             List<FactureViewModel> factures = new ArrayList<>();
             for (Facture f : allfactures) {
+                double frais = f.getStatut() != StatutFacture.PAYEE
+                        ? factureService.getTotalMontantAPayerTTCAvecFrais(f) - f.getMontantTTC()
+                        : 0.0;
                 factures.add(new FactureViewModel(
                         f.getId(),
                         f.getReference(),
                         f.getDateEmission().format(fmt),
                         f.getDateEcheance().format(fmt),
-                        f.getMontantTTC(), 0.0,
+                        f.getMontantTTC(), frais,
                         f.getStatut(),
                         f.getContratId(),
                         contratsParId.get(f.getContratId()).getAdressePostale()
