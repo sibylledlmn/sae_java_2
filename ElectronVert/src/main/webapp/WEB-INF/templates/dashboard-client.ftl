@@ -45,7 +45,7 @@
             </div>
             <div class="stat-card">
                 <div class="stat-icon-wrap red" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
-                <div class="stat-label">Factures impayées</div>
+                <div class="stat-label">Factures à payer</div>
                 <div class="stat-value">${facturesImpayees?size}</div>
                 <div class="stat-sub">Total dû :  ${totalDu} €</div>
             </div>
@@ -77,7 +77,7 @@
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
                         Factures récentes
                     </h2>
-                    <a href="#" class="card-link">Tout voir →</a>
+                    <a href="/client/factures" class="card-link">Tout voir →</a>
                 </div>
                 <table class="table">
                     <thead>
@@ -142,7 +142,7 @@
                 </div>
                 </#list>
                 <div class="card-footer">
-                    <a href="#">+ Voir tous mes contrats</a>
+                    <a href="/client/contrats">+ Voir tous mes contrats</a>
                 </div>
             </div>
         </div>
