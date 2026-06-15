@@ -69,6 +69,7 @@ public class DashboardClientServlet extends HttpServlet {
                         f.getDateEmission().format(fmt),
                         f.getDateEcheance().format(fmt),
                         f.getMontantTTC(), 0.0,
+                        null,
                         f.getStatut(),
                         f.getContratId(),
                         contratsParId.get(f.getContratId()).getAdressePostale()
@@ -83,6 +84,7 @@ public class DashboardClientServlet extends HttpServlet {
             for (Facture facture : factures) {
                 factureViewModels.add(new FactureViewModel(facture.getId(), facture.getReference(), facture.getDateEmission().format(fmt), facture.getDateEcheance().format(fmt),
                         facture.getMontantTTC(), 0.0,
+                        null,
                         facture.getStatut(), facture.getContratId(), contratsParId.get(facture.getContratId()).getAdressePostale()));
             }
 

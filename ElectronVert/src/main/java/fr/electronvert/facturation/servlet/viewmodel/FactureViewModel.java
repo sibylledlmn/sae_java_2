@@ -12,12 +12,14 @@ public class FactureViewModel {
     private final double montantFraisRelanceBrut;
     private final String montantTotalFraisInclus;
     private final double montantTotalFraisInclusBrut;
+    private final String dateProchaineRelance;
     private final StatutFacture statut;
     private final int contratId;
     private final String contratAdresse;
 
     public FactureViewModel(int id, String reference, String dateEmission, String dateEcheance,
                             double montantTTC, double montantFraisRelance,
+                            String dateProchaineRelance,
                             StatutFacture statut, int contratId, String contratAdresse) {
         this.id = id;
         this.reference = reference;
@@ -28,6 +30,7 @@ public class FactureViewModel {
         this.montantFraisRelanceBrut = montantFraisRelance;
         this.montantTotalFraisInclusBrut = montantTTC + montantFraisRelance;
         this.montantTotalFraisInclus = formater(this.montantTotalFraisInclusBrut);
+        this.dateProchaineRelance = dateProchaineRelance;
         this.statut = statut;
         this.contratId = contratId;
         this.contratAdresse = contratAdresse;
@@ -46,6 +49,7 @@ public class FactureViewModel {
     public double getMontantFraisRelanceBrut() { return montantFraisRelanceBrut; }
     public String getMontantTotalFraisInclus() { return montantTotalFraisInclus; }
     public double getMontantTotalFraisInclusBrut() { return montantTotalFraisInclusBrut; }
+    public String getDateProchaineRelance() { return dateProchaineRelance; }
     public StatutFacture getStatut() { return statut; }
     public int getContratId() { return contratId; }
     public String getContratAdresse() { return contratAdresse; }

@@ -145,6 +145,7 @@
                     <th>Contrat</th>
                     <th>Émission</th>
                     <th>Échéance</th>
+                    <th>Prochaine relance</th>
                     <th class="right">Montant TTC</th>
                     <th class="right">Frais de relance</th>
                     <th class="right">Total à payer</th>
@@ -158,6 +159,7 @@
                         <td><span class="f-ref">CT-${facture.contratId}</span><br><span class="f-contrat">${facture.contratAdresse}</span></td>
                         <td>${facture.dateEmission}</td>
                         <td>${facture.dateEcheance}</td>
+                        <td><#if facture.dateProchaineRelance??>${facture.dateProchaineRelance}<#else>—</#if></td>
                         <td class="right">${facture.montantTTC}</td>
                         <td class="right"><#if (facture.montantFraisRelanceBrut > 0)>${facture.montantFraisRelance}<#else>—</#if></td>
                         <td class="right">${facture.montantTotalFraisInclus}</td>

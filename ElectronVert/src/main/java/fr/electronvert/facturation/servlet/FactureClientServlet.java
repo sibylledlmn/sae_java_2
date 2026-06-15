@@ -63,6 +63,7 @@ public class FactureClientServlet extends HttpServlet {
                         f.getDateEmission().format(fmt),
                         f.getDateEcheance().format(fmt),
                         f.getMontantTTC(), frais,
+                        null,
                         f.getStatut(),
                         f.getContratId(),
                         contratsParId.get(f.getContratId()).getAdressePostale()
@@ -73,12 +74,15 @@ public class FactureClientServlet extends HttpServlet {
             double totalAPayer = 0;
             for (Facture f : allfacturesAPayer) {
                 double frais = factureService.getTotalMontantAPayerTTCAvecFrais(f) - f.getMontantTTC();
+                String dateProchaineRelance = f.getDateProchaineRelance() != null
+                        ? f.getDateProchaineRelance().format(fmt) : null;
                 FactureViewModel vm = new FactureViewModel(
                         f.getId(),
                         f.getReference(),
                         f.getDateEmission().format(fmt),
                         f.getDateEcheance().format(fmt),
                         f.getMontantTTC(), frais,
+                        dateProchaineRelance,
                         f.getStatut(),
                         f.getContratId(),
                         contratsParId.get(f.getContratId()).getAdressePostale()
