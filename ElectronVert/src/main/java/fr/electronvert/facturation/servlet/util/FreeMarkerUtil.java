@@ -22,6 +22,8 @@ public class FreeMarkerUtil {
         config.setLocale(Locale.FRENCH);
     }
 
+    public static Configuration getConfiguration() { return config; }
+
     public static void render(String templateName, Map<String,Object> dataModel, HttpServletResponse response) throws IOException, TemplateException {
         Template template = config.getTemplate(templateName);
         response.setContentType("text/html;charset=UTF-8");

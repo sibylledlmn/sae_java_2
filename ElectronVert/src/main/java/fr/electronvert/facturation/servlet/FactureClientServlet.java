@@ -2,12 +2,15 @@ package fr.electronvert.facturation.servlet;
 
 import fr.electronvert.facturation.dao.ContratDAO;
 import fr.electronvert.facturation.dao.FactureDAO;
+import fr.electronvert.facturation.dao.FraisRelanceDAO;
 import fr.electronvert.facturation.dao.impl.ContratDAOJdbc;
 import fr.electronvert.facturation.dao.impl.FactureDAOJdbc;
+import fr.electronvert.facturation.dao.impl.FraisRelanceDAOJdbc;
 import fr.electronvert.facturation.model.contrat.Contrat;
 import fr.electronvert.facturation.model.facture.Facture;
 import fr.electronvert.facturation.model.facture.StatutFacture;
 import fr.electronvert.facturation.model.utilisateur.Utilisateur;
+import fr.electronvert.facturation.services.FactureService;
 import fr.electronvert.facturation.servlet.util.FreeMarkerUtil;
 import fr.electronvert.facturation.servlet.viewmodel.FactureViewModel;
 import freemarker.template.TemplateException;
@@ -27,10 +30,12 @@ public class FactureClientServlet extends HttpServlet {
 
     private final ContratDAO contratDAO = new ContratDAOJdbc();
     private final FactureDAO factureDAO = new FactureDAOJdbc();
+    private final FraisRelanceDAO fraisRelanceDAO = new FraisRelanceDAOJdbc();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Utilisateur utilisateur = (Utilisateur) req.getSession().getAttribute("utilisateur");
+        FactureService factureService = new FactureService(factureDAO, fraisRelanceDAO);
         if(utilisateur == null){
             resp.sendRedirect(req.getContextPath() + "/connexion.html");
             return;
@@ -49,12 +54,15 @@ public class FactureClientServlet extends HttpServlet {
 
             List<FactureViewModel> factures = new ArrayList<>();
             for (Facture f : allfactures) {
+                double frais = f.getStatut() != StatutFacture.PAYEE
+                        ? factureService.getTotalMontantAPayerTTCAvecFrais(f) - f.getMontantTTC()
+                        : 0.0;
                 factures.add(new FactureViewModel(
                         f.getId(),
                         f.getReference(),
                         f.getDateEmission().format(fmt),
                         f.getDateEcheance().format(fmt),
-                        String.format("%.2f", f.getMontantTTC()).replace(".", ",") + " €",
+                        f.getMontantTTC(), frais,
                         f.getStatut(),
                         f.getContratId(),
                         contratsParId.get(f.getContratId()).getAdressePostale()
@@ -62,22 +70,21 @@ public class FactureClientServlet extends HttpServlet {
             }
 
             List<FactureViewModel> facturesAPayer = new ArrayList<>();
+            double totalAPayer = 0;
             for (Facture f : allfacturesAPayer) {
-                facturesAPayer.add(new FactureViewModel(
+                double frais = factureService.getTotalMontantAPayerTTCAvecFrais(f) - f.getMontantTTC();
+                FactureViewModel vm = new FactureViewModel(
                         f.getId(),
                         f.getReference(),
                         f.getDateEmission().format(fmt),
                         f.getDateEcheance().format(fmt),
-                        String.format("%.2f", f.getMontantTTC()).replace(".", ",") + " €",
+                        f.getMontantTTC(), frais,
                         f.getStatut(),
                         f.getContratId(),
                         contratsParId.get(f.getContratId()).getAdressePostale()
-                ));
-            }
-
-            double totalAPayer = 0;
-            for (Facture f : allfacturesAPayer) {
-                totalAPayer += f.getMontantTTC();
+                );
+                facturesAPayer.add(vm);
+                totalAPayer += vm.getMontantTotalFraisInclusBrut();
             }
             String totalAPayerFormate = String.format("%.2f", totalAPayer).replace(".", ",") + " €";
 

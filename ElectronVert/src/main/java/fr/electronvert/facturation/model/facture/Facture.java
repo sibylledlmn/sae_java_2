@@ -5,8 +5,10 @@ import fr.electronvert.facturation.model.contrat.Contrat;
 import fr.electronvert.facturation.model.releve.TypeReleve;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Représente une facture figée du système de facturation.
@@ -247,77 +249,77 @@ public class Facture implements Comparable<Facture> {
         this.contientFraisChangementOffre = true;
     }
 
-    // =====================
-    // CALCULS
-    // =====================
-
-    /**
-     * Calcule le montant total TTC à payer, incluant les frais de relance.
-     *
-     * @return montant total TTC
-     */
-    public double getMontantTotalTTCAPayer() {
-        double total = montantTTC;
-        for (FraisRelance frais : fraisDeRelance) {
-            total += frais.getMontantTTC();
-        }
-        return total;
-    }
-
-    // =====================
-    // AFFICHAGE
-    // =====================
-
-    /**
-     * Résumé court de la facture pour affichage en liste.
-     *
-     * @return résumé de la facture
-     */
-    public String toResume() {
-        return reference + " | "
-                + dateEmission + " | "
-                + arrondir2Decimales(getMontantTotalTTCAPayer()) + " € | "
-                + statut;
-    }
-
-    /**
-     * Retourne les détails complets de la facture.
-     *
-     * @return description détaillée
-     */
-    public String getDetails() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("=== FACTURE ===\n")
-                .append("Référence : ").append(reference).append("\n")
-                .append("Type : ").append(type).append("\n")
-                .append("Date émission : ").append(dateEmission.format(formatter)).append("\n")
-                .append("Date échéance : ").append(dateEcheance.format(formatter)).append("\n")
-                .append("Statut : ").append(statut).append("\n\n")
-
-                .append("--- MONTANTS ---\n")
-                .append("HT : ").append(arrondir2Decimales(montantHT)).append(" €\n")
-                .append("TVA : ").append(arrondir2Decimales(montantTVA)).append(" €\n")
-                .append("TTC : ").append(arrondir2Decimales(montantTTC)).append(" €\n");
-
-        if (!fraisDeRelance.isEmpty()) {
-            sb.append("\n--- FRAIS DE RELANCE ---\n");
-            for (FraisRelance frais : fraisDeRelance) {
-                sb.append(frais).append("\n");
-            }
-            sb.append("\nTOTAL À PAYER : ")
-                    .append(arrondir2Decimales(getMontantTotalTTCAPayer()))
-                    .append(" €\n");
-        }
-
-        if (contientFraisChangementOffre) {
-            sb.append("\n--- INFORMATION ---\n")
-                    .append("Cette facture inclut des frais de changement d'offre.\n");
-        }
-
-        return sb.toString();
-    }
+//    // =====================
+//    // CALCULS
+//    // =====================
+//
+//    /**
+//     * Calcule le montant total TTC à payer, incluant les frais de relance.
+//     *
+//     * @return montant total TTC
+//     */
+//    public double getMontantTotalTTCAPayer() {
+//        double total = montantTTC;
+//        for (FraisRelance frais : fraisDeRelance) {
+//            total += frais.getMontantTTC();
+//        }
+//        return total;
+//    }
+//
+//    // =====================
+//    // AFFICHAGE
+//    // =====================
+//
+//    /**
+//     * Résumé court de la facture pour affichage en liste.
+//     *
+//     * @return résumé de la facture
+//     */
+//    public String toResume() {
+//        return reference + " | "
+//                + dateEmission + " | "
+//                + arrondir2Decimales(getMontantTotalTTCAPayer()) + " € | "
+//                + statut;
+//    }
+//
+//    /**
+//     * Retourne les détails complets de la facture.
+//     *
+//     * @return description détaillée
+//     */
+//    public String getDetails() {
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//        StringBuilder sb = new StringBuilder();
+//
+//        sb.append("=== FACTURE ===\n")
+//                .append("Référence : ").append(reference).append("\n")
+//                .append("Type : ").append(type).append("\n")
+//                .append("Date émission : ").append(dateEmission.format(formatter)).append("\n")
+//                .append("Date échéance : ").append(dateEcheance.format(formatter)).append("\n")
+//                .append("Statut : ").append(statut).append("\n\n")
+//
+//                .append("--- MONTANTS ---\n")
+//                .append("HT : ").append(arrondir2Decimales(montantHT)).append(" €\n")
+//                .append("TVA : ").append(arrondir2Decimales(montantTVA)).append(" €\n")
+//                .append("TTC : ").append(arrondir2Decimales(montantTTC)).append(" €\n");
+//
+//        if (!fraisDeRelance.isEmpty()) {
+//            sb.append("\n--- FRAIS DE RELANCE ---\n");
+//            for (FraisRelance frais : fraisDeRelance) {
+//                sb.append(frais).append("\n");
+//            }
+//            sb.append("\nTOTAL À PAYER : ")
+//                    .append(arrondir2Decimales(getMontantTotalTTCAPayer()))
+//                    .append(" €\n");
+//        }
+//
+//        if (contientFraisChangementOffre) {
+//            sb.append("\n--- INFORMATION ---\n")
+//                    .append("Cette facture inclut des frais de changement d'offre.\n");
+//        }
+//
+//        return sb.toString();
+//    }
 
     // =====================
     // GETTERS

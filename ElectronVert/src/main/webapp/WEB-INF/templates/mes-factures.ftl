@@ -55,6 +55,8 @@
                     <th>Émission</th>
                     <th>Échéance</th>
                     <th class="right">Montant TTC</th>
+                    <th class="right">Frais de relance</th>
+                    <th class="right">Total à payer</th>
                     <th class="right">Statut</th>
                     <th class="right">Actions</th>
                 </tr>
@@ -67,6 +69,8 @@
                         <td>${facture.dateEmission}</td>
                         <td>${facture.dateEcheance}</td>
                         <td class="right">${facture.montantTTC}</td>
+                        <td class="right"><#if (facture.montantFraisRelanceBrut > 0)>${facture.montantFraisRelance}<#else>—</#if></td>
+                        <td class="right">${facture.montantTotalFraisInclus}</td>
                         <td class="right">
                             <#if facture.statut == "PAYEE">
                                 <span class="badge green">Payée</span>
@@ -82,7 +86,7 @@
                                     <button class="btn btn-primary btn-payer"
                                             data-facture-id="${facture.id}"
                                             data-reference="${facture.reference}"
-                                            data-montant="${facture.montantTTC}">
+                                            data-montant="${facture.montantTotalFraisInclus}">
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
                                              stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                              stroke-linejoin="round" aria-hidden="true">
@@ -92,7 +96,7 @@
                                         Payer
                                     </button>
                                 </#if>
-                                <button class="btn btn-outline">
+                                <a href="/client/factures/pdf?factureId=${facture.id}" class="btn btn-outline">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                          aria-hidden="true">
@@ -101,7 +105,7 @@
                                         <line x1="12" y1="15" x2="12" y2="3"/>
                                     </svg>
                                     PDF
-                                </button>
+                                </a>
                             </div>
                         </td>
                     </tr>
@@ -142,6 +146,8 @@
                     <th>Émission</th>
                     <th>Échéance</th>
                     <th class="right">Montant TTC</th>
+                    <th class="right">Frais de relance</th>
+                    <th class="right">Total à payer</th>
                     <th class="right">Action</th>
                 </tr>
                 </thead>
@@ -153,13 +159,15 @@
                         <td>${facture.dateEmission}</td>
                         <td>${facture.dateEcheance}</td>
                         <td class="right">${facture.montantTTC}</td>
+                        <td class="right"><#if (facture.montantFraisRelanceBrut > 0)>${facture.montantFraisRelance}<#else>—</#if></td>
+                        <td class="right">${facture.montantTotalFraisInclus}</td>
                         <td class="right">
                             <div class="f-actions">
 
                                     <button class="btn btn-primary btn-payer"
                                             data-facture-id="${facture.id}"
                                             data-reference="${facture.reference}"
-                                            data-montant="${facture.montantTTC}">
+                                            data-montant="${facture.montantTotalFraisInclus}">
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
                                              stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                              stroke-linejoin="round" aria-hidden="true">
@@ -169,7 +177,7 @@
                                         Payer
                                     </button>
 
-                                <button class="btn btn-outline">
+                                <a href="/client/factures/pdf?factureId=${facture.id}" class="btn btn-outline">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                          aria-hidden="true">
@@ -178,7 +186,7 @@
                                         <line x1="12" y1="15" x2="12" y2="3"/>
                                     </svg>
                                     PDF
-                                </button>
+                                </a>
                             </div>
                         </td>
                     </tr>
