@@ -28,7 +28,7 @@ public class ProfilClientServlet extends HttpServlet {
 
     UtilisateurDAO utilisateurDAO = new UtilisateurDAOJdbc();
     ContratDAO contratDAO = new ContratDAOJdbc();
-    UtilisateurService utilisateurService = new UtilisateurService(utilisateurDAO);
+    UtilisateurService utilisateurService = new UtilisateurService(utilisateurDAO, contratDAO);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

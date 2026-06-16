@@ -59,7 +59,7 @@ public class DashboardAdminServlet extends HttpServlet {
         }
         ContratService contratService = new ContratService(contratDAO, factureDAO);
         FactureService factureService = new FactureService(factureDAO, fraisRelanceDAO, contratDAO);
-        UtilisateurService utilisateurService = new UtilisateurService(utilisateurDAO);
+        UtilisateurService utilisateurService = new UtilisateurService(utilisateurDAO, contratDAO);
         YearMonth moisCourant = YearMonth.now();
         String mois = LocalDate.now().format(DateTimeFormatter.ofPattern("MMMM yyyy", Locale.FRENCH));
         mois = mois.substring(0, 1).toUpperCase() + mois.substring(1);
