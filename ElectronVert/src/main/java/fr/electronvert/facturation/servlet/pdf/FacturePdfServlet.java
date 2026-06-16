@@ -47,7 +47,7 @@ public class FacturePdfServlet extends HttpServlet {
             Contrat contrat  = contratDAO.findById(facture.getContratId());
             List<FraisRelance> listFraisRelance = fraisRelanceDAO.findByFactureId(factureId);
 
-            FactureService factureService = new FactureService(factureDAO, fraisRelanceDAO);
+            FactureService factureService = new FactureService(factureDAO, fraisRelanceDAO, contratDAO);
             TotauxFraisRelance totauxFrais = factureService.getTotauxFrais(facture);
             double totalFinal = factureService.getTotalMontantAPayerTTCAvecFrais(facture);
 
