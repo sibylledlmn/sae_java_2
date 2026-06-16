@@ -35,7 +35,7 @@ public class FactureClientServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Utilisateur utilisateur = (Utilisateur) req.getSession().getAttribute("utilisateur");
-        FactureService factureService = new FactureService(factureDAO, fraisRelanceDAO);
+        FactureService factureService = new FactureService(factureDAO, fraisRelanceDAO, contratDAO);
         if(utilisateur == null){
             resp.sendRedirect(req.getContextPath() + "/connexion.html");
             return;

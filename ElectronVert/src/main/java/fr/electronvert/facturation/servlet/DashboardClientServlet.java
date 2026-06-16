@@ -55,7 +55,7 @@ public class DashboardClientServlet extends HttpServlet {
             List<Contrat> contratsClotures = tousLesContrats.stream()
                     .filter(c -> c.getStatut() == StatutContrat.CLOTURE)
                     .toList();
-            FactureService factureService = new FactureService(factureDAO, fraisRelanceDAO);
+            FactureService factureService = new FactureService(factureDAO, fraisRelanceDAO, contratDAO);
             double totalDu = 0.0;
             for (Facture facture : facturesImpayees) {
                 totalDu += factureService.getTotalMontantAPayerTTCAvecFrais(facture);

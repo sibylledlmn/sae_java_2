@@ -3,12 +3,11 @@ package fr.electronvert.facturation.services;
 import fr.electronvert.facturation.dao.ContratDAO;
 import fr.electronvert.facturation.dao.FactureDAO;
 import fr.electronvert.facturation.exception.ChangementModeFacturationImpossibleException;
-import fr.electronvert.facturation.model.contrat.Contrat;
-import fr.electronvert.facturation.model.contrat.ModeFacturation;
-import fr.electronvert.facturation.model.contrat.OffreTarifaire;
+import fr.electronvert.facturation.model.contrat.*;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class ContratService {
 
@@ -47,6 +46,54 @@ public class ContratService {
         contrat.planifierChangementModeFacturation(nouveauMode);
         contratDAO.update(contrat);
     }
+
+    public int getNbContratsActifs() throws SQLException {
+        List<Contrat> contratsActifs = contratDAO.findActifs();
+        return contratsActifs.size();
+    }
+
+    public int getNbContratsClotures() throws SQLException {
+        return contratDAO.nbContratsClotures();
+    }
+
+    public int getNbClientsActifs() throws SQLException {
+        return (int) contratDAO.findActifs().stream()
+                .map(c -> c.getClient().getId())
+                .distinct()
+                .count();
+    }
+
+    public double getPourcentageOffreClassique() throws SQLException {
+        return getPourcentageOffre(contratDAO.findActifs(), OffreClassique.class);
+    }
+
+    public double getPourcentageOffreHPHC() throws SQLException {
+        return getPourcentageOffre(contratDAO.findActifs(), OffreHPHC.class);
+    }
+
+    public double getPourcentageModeFacturationReel() throws SQLException {
+        return getPourcentageMode(contratDAO.findActifs(), ModeFacturation.REEL);
+    }
+
+    public double getPourcentageModeFacturationEcheancier() throws SQLException {
+        return getPourcentageMode(contratDAO.findActifs(), ModeFacturation.ECHEANCIER);
+    }
+
+    private double getPourcentageOffre(List<Contrat> contrats, Class<? extends OffreTarifaire> type) {
+        if (contrats.isEmpty()) return 0;
+        long nb = contrats.stream().filter(c -> type.isInstance(c.getOffreTarifaire())).count();
+        return (nb / (double) contrats.size()) * 100;
+    }
+
+    private double getPourcentageMode(List<Contrat> contrats, ModeFacturation mode) {
+        if (contrats.isEmpty()) return 0;
+        long nb = contrats.stream().filter(c -> c.getModeFacturation() == mode).count();
+        return (nb / (double) contrats.size()) * 100;
+    }
+
+
+
+
 
 
 }

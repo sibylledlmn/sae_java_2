@@ -1,10 +1,13 @@
 package fr.electronvert.facturation.services;
 
 import fr.electronvert.facturation.dao.UtilisateurDAO;
+import fr.electronvert.facturation.model.utilisateur.ClientResume;
 import fr.electronvert.facturation.model.utilisateur.Utilisateur;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.SQLException;
+import java.time.YearMonth;
+import java.util.List;
 
 public class UtilisateurService {
 
@@ -31,6 +34,14 @@ public class UtilisateurService {
         String hash = BCrypt.hashpw(nouveauMdp, BCrypt.gensalt());
         utilisateur.setMotDePasse(hash);
         utilisateurDAO.updateMotDePasse(utilisateur.getId(), hash);
+    }
+
+    public int getNbNouveauxClients(YearMonth mois) throws SQLException{
+        return utilisateurDAO.getNbNouveauClient(mois);
+    }
+
+    public List<ClientResume>  findDerniersClients(int nb) throws SQLException{
+        return  utilisateurDAO.findDerniersClients(nb);
     }
 
 }
