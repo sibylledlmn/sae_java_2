@@ -1,0 +1,119 @@
+/* TABLE IMPAYÉES */
+.impayees-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.impayees-table th {
+    font-size: 11px;
+    font-weight: 600;
+    color: #7a9a82;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: left;
+    padding: 0 0 10px 0;
+    border-bottom: 1px solid #e6f0e8;
+}
+
+.impayees-table th:nth-child(2),
+.impayees-table th:nth-child(3) { text-align: right; }
+
+.impayees-table td {
+    padding: 11px 0;
+    border-bottom: 1px solid #f0f6f2;
+    vertical-align: middle;
+}
+
+.impayees-table tr:last-child td { border-bottom: none; }
+
+.client-name  { font-size: 13px; font-weight: 500; color: #1c2b22; }
+.facture-info { font-size: 11px; color: #7a9a82; margin-top: 2px; }
+.td-right     { text-align: right; }
+.montant      { font-size: 13px; font-weight: 600; color: #1c2b22; }
+
+/* DONUT */
+.donut-wrap {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.canvas-wrap {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    flex-shrink: 0;
+}
+
+.legend {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.leg-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: #4a6a52;
+}
+
+.leg-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.leg-dot.classique  { background: #2a7a4a; }
+.leg-dot.hphc       { background: #5bbf8a; }
+.leg-dot.reel       { background: #1a3a8a; }
+.leg-dot.echeancier { background: #85b7eb; }
+
+.legend-divider {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #f0f6f2;
+}
+
+.legend-section-label {
+    font-size: 11px;
+    color: #7a9a82;
+    margin-bottom: 6px;
+}
+
+/* CLIENTS */
+.clients-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.client-card {
+    border: 1px solid #f0f6f2;
+    border-radius: 8px;
+    padding: 11px 13px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.client-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #dff5e8;
+    color: #1a5a32;
+    font-size: 10px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.client-name-main { font-size: 13px; font-weight: 500; color: #1c2b22; }
+.client-date      { font-size: 11px; color: #7a9a82; margin: 2px 0 5px; }
+.client-badges    { display: flex; gap: 4px; flex-wrap: wrap; }
