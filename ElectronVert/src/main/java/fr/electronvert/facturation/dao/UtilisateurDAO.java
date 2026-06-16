@@ -1,8 +1,10 @@
 package fr.electronvert.facturation.dao;
 
+import fr.electronvert.facturation.model.utilisateur.ClientResume;
 import fr.electronvert.facturation.model.utilisateur.Utilisateur;
 
 import java.sql.SQLException;
+import java.time.YearMonth;
 import java.util.List;
 
 public interface UtilisateurDAO {
@@ -20,5 +22,9 @@ public interface UtilisateurDAO {
     void update(Utilisateur utilisateur) throws SQLException;
 
     void updateMotDePasse(int id, String nouveauMotDePasseHash) throws SQLException;
+
+    List<ClientResume> findDerniersClients(int nb) throws SQLException;
+
+    int getNbNouveauClient(YearMonth mois) throws SQLException;
 
 }

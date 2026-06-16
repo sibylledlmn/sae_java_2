@@ -2,10 +2,12 @@ package fr.electronvert.facturation.dao.impl;
 
 import fr.electronvert.facturation.dao.ConnectionManager;
 import fr.electronvert.facturation.dao.UtilisateurDAO;
+import fr.electronvert.facturation.model.utilisateur.ClientResume;
 import fr.electronvert.facturation.model.utilisateur.RoleUtilisateur;
 import fr.electronvert.facturation.model.utilisateur.Utilisateur;
 
 import java.sql.*;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,5 +115,52 @@ public class UtilisateurDAOJdbc implements UtilisateurDAO {
             ps.setInt(2, id);
             ps.executeUpdate();
         }
+    }
+
+    public List<ClientResume> findDerniersClients(int nb) throws SQLException {
+        String query = "SELECT u.id, u.prenom, u.nom, MAX(c.date_souscription) AS date_inscription " +
+                "FROM utilisateur u " +
+                "JOIN contrat c ON c.client_id = u.id " +
+                "WHERE u.role = 'CLIENT' " +
+                "GROUP BY u.id, u.prenom, u.nom " +
+                "ORDER BY date_inscription DESC LIMIT ?";
+        List<ClientResume> clients = new ArrayList<>();
+        try (Connection co = ConnectionManager.getConnection();
+             PreparedStatement ps = co.prepareStatement(query)) {
+            ps.setInt(1, nb);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    clients.add(new ClientResume(
+                            rs.getInt("id"),
+                            rs.getString("prenom"),
+                            rs.getString("nom"),
+                            rs.getDate("date_inscription").toLocalDate()
+                    ));
+                }
+            }
+        }
+        return clients;
+     }
+
+    @Override
+    public int getNbNouveauClient(YearMonth mois) throws SQLException {
+        String query = "SELECT COUNT(*) FROM (" +
+                "SELECT u.id FROM utilisateur u " +
+                "JOIN contrat c ON c.client_id = u.id " +
+                "WHERE u.role = 'CLIENT' " +
+                "GROUP BY u.id " +
+                "HAVING YEAR(MIN(c.date_souscription)) = ? AND MONTH(MIN(c.date_souscription)) = ?" +
+                ") AS t";
+        try (Connection co = ConnectionManager.getConnection();
+             PreparedStatement ps = co.prepareStatement(query)) {
+            ps.setInt(1, mois.getYear());
+            ps.setInt(2, mois.getMonthValue());
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        }
+        return 0;
     }
 }

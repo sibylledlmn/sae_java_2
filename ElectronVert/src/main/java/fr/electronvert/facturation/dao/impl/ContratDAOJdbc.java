@@ -172,6 +172,19 @@ public class ContratDAOJdbc implements ContratDAO {
         return contrats;
     }
 
+    @Override
+    public int nbContratsClotures() throws SQLException {
+        String query = "SELECT COUNT(*) FROM contrat WHERE statut = 'CLOTURE'";
+        try (Connection co = ConnectionManager.getConnection();
+             PreparedStatement ps = co.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+
     private static OffreTarifaire offreFromString(String nom) {
         return switch (nom) {
             case "OffreClassique" -> new OffreClassique();

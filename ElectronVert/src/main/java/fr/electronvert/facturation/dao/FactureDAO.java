@@ -5,6 +5,7 @@ import fr.electronvert.facturation.model.facture.StatutFacture;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 
 public interface FactureDAO {
@@ -21,5 +22,6 @@ public interface FactureDAO {
     List<Facture> findNonPayeesByClientId(int clientId) throws SQLException;
     List<Facture> findAllByClientId(int clientId) throws SQLException;
     List<Facture> findRecentesByClientId(int clientId, int limite) throws SQLException;
+    double getCAMensuel(YearMonth mois)  throws SQLException;
 
 }

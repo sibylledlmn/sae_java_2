@@ -8,6 +8,7 @@ import fr.electronvert.facturation.model.facture.TypeFacture;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -199,6 +200,24 @@ public class FactureDAOJdbc implements FactureDAO {
             }
         }
         return factures;
+    }
+
+    @Override
+    public double getCAMensuel(YearMonth mois) throws SQLException {
+        String query = "SELECT COALESCE(SUM(montant_ttc), 0) FROM facture " +
+                "WHERE statut = 'PAYEE' " +
+                "AND YEAR(date_emission) = ? AND MONTH(date_emission) = ?";
+        try (Connection co = ConnectionManager.getConnection();
+             PreparedStatement ps = co.prepareStatement(query)) {
+            ps.setInt(1, mois.getYear());
+            ps.setInt(2, mois.getMonthValue());
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getDouble(1);
+                }
+            }
+        }
+        return 0.0;
     }
 
     private Facture factureFromResultSet(ResultSet rs) throws SQLException {

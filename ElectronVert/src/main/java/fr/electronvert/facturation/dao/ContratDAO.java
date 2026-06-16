@@ -25,6 +25,8 @@ public interface ContratDAO {
     List<Contrat> findActifs() throws SQLException;
     List<Contrat> findActifsByClientId(int clientId) throws SQLException;
 
+    int nbContratsClotures() throws SQLException;
+
 
 
 }
