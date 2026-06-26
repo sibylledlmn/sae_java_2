@@ -40,10 +40,24 @@ public class FactureClientServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/connexion.html");
             return;
         }
+        // Filtre par contrat (0 = tous)
+            String contratIdParam = req.getParameter("contratId");
+            int contratIdFiltre = 0;
+            if (contratIdParam != null && !contratIdParam.equals("tous")) {
+                try { contratIdFiltre = Integer.parseInt(contratIdParam); } catch (NumberFormatException ignored) {}
+            }
+
         try {
             List<Facture> allfactures= factureDAO.findAllByClientId(utilisateur.getId());
             List<Facture> allfacturesAPayer = factureDAO.findNonPayeesByClientId(utilisateur.getId());
             List<Contrat> tousContrats = contratDAO.findByClientId(utilisateur.getId());
+
+            // Appliquer le filtre contrat si besoin
+            if (contratIdFiltre != 0) {
+                final int filtre = contratIdFiltre;
+                allfactures = allfactures.stream().filter(f -> f.getContratId() == filtre).toList();
+                allfacturesAPayer = allfacturesAPayer.stream().filter(f -> f.getContratId() == filtre).toList();
+            }
 
             Map<Integer, Contrat> contratsParId = new HashMap<>();
             for (Contrat c : tousContrats) {
@@ -97,6 +111,7 @@ public class FactureClientServlet extends HttpServlet {
             model.put("factures", factures);
             model.put("facturesAPayer", facturesAPayer);
             model.put("contrats", tousContrats);
+            model.put("contratIdFiltre", contratIdFiltre);
             model.put("totalAPayer", totalAPayerFormate);
             model.put("pageActive", "factures");
             FreeMarkerUtil.render("mes-factures.ftl", model, resp);

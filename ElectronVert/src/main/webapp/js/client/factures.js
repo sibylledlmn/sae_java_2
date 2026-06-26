@@ -4,68 +4,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // GESTION DU CHANGEMENT D'ONGLETS'
   initTabs();
 
-  // FILTRE
-    const tbodyToutes = document.getElementById("tbody-toutes");
-    const tbodyApayer = document.getElementById("tbody-apayer");
-    const filtre = document.getElementById("filtre-contrat");
-    filtre.addEventListener("change", () => {
-        const valeur = filtre.value;
-        let filtreEstSurTous;
-        if (valeur === "tous") {
-            filtreEstSurTous = true;
-        } else {
-            filtreEstSurTous = false;
-        }
-
-        // Filtrer le panel toutes les factures
-        let visibleToutes = 0;
-        const lignesToutes = tbodyToutes.querySelectorAll("tr");
-
-        lignesToutes.forEach(row => {
-            const contratDeLaLigne = row.dataset.contrat;
-            let ligneCorrespondAuFiltre;
-            if (contratDeLaLigne === valeur) {
-                ligneCorrespondAuFiltre = true;
-            } else {
-                ligneCorrespondAuFiltre = false;
-            }
-            if (filtreEstSurTous || ligneCorrespondAuFiltre) {
-                row.style.display = "";
-                visibleToutes++;
-            } else {
-                row.style.display = "none";
-            }
-        });
-
-        document.getElementById("empty-toutes").classList.toggle("hidden", visibleToutes > 0);
-        document.getElementById("count-toutes").textContent = visibleToutes;
-
-        // Filtrer le panel "À payer"
-        let visibleApayer = 0;
-        const lignesApayer = tbodyApayer.querySelectorAll("tr");
-
-        lignesApayer.forEach(row => {
-            const contratDeLaLigne = row.dataset.contrat;
-
-            let ligneCorrespondAuFiltre;
-            if (contratDeLaLigne === valeur) {
-                ligneCorrespondAuFiltre = true;
-            } else {
-                ligneCorrespondAuFiltre = false;
-            }
-
-            if (filtreEstSurTous || ligneCorrespondAuFiltre) {
-                row.style.display = "";
-                visibleApayer++;
-            } else {
-                row.style.display = "none";
-            }
-        });
-
-        document.getElementById("empty-apayer").classList.toggle("hidden", visibleApayer > 0);
-        document.getElementById("count-apayer").textContent = visibleApayer;
-
-    })
+    // FILTRE CONTRAT — soumission automatique du formulaire au changement
+    document.getElementById("filtre-contrat").addEventListener("change", function () {
+        document.getElementById("form-filtre").submit();
+    });
 
     // MODALE DE PAIEMENT
 

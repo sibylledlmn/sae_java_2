@@ -34,13 +34,15 @@
             </div>
         </div>
         <div class="filter-wrap">
-            <label class="filter-label" for="filtre-contrat">Contrat :</label>
-            <select class="filter-select" id="filtre-contrat">
-                <option value="tous">Tous les contrats</option>
-            <#list contrats as c>
-                <option value="${c.id}">${c.id} - ${c.adressePostale}</option>
-            </#list>
-            </select>
+            <form method="get" action="/client/factures" id="form-filtre">
+                <label class="filter-label" for="filtre-contrat">Contrat :</label>
+                <select class="filter-select" id="filtre-contrat" name="contratId">
+                    <option value="tous" <#if contratIdFiltre == 0>selected</#if>>Tous les contrats</option>
+                <#list contrats as c>
+                    <option value="${c.id}" <#if contratIdFiltre == c.id>selected</#if>>${c.id} - ${c.adressePostale}</option>
+                </#list>
+                </select>
+            </form>
         </div>
     </div>
 
@@ -63,7 +65,7 @@
                 </thead>
                 <tbody id="tbody-toutes">
                 <#list factures as facture>
-                    <tr  data-contrat="${facture.contratId}">
+                    <tr>
                         <td><div class="f-ref">${facture.reference}</div></td>
                         <td><span class="f-ref">CT-${facture.contratId}</span><br><span class="f-contrat">${facture.contratAdresse}</span></td>
                         <td>${facture.dateEmission}</td>
@@ -112,7 +114,9 @@
                 </#list>
                 </tbody>
             </table>
-            <div id="empty-toutes" class="empty hidden">Aucune facture pour ce contrat.</div>
+            <#if factures?size == 0>
+                <div class="empty">Aucune facture pour ce contrat.</div>
+            </#if>
         </div>
     </div>
 
@@ -154,7 +158,7 @@
                 </thead>
                 <tbody id="tbody-apayer">
                 <#list facturesAPayer as facture>
-                    <tr  data-contrat="${facture.contratId}">
+                    <tr>
                         <td><div class="f-ref">${facture.reference}</div></td>
                         <td><span class="f-ref">CT-${facture.contratId}</span><br><span class="f-contrat">${facture.contratAdresse}</span></td>
                         <td>${facture.dateEmission}</td>
@@ -195,7 +199,9 @@
                 </#list>
                 </tbody>
             </table>
-            <div id="empty-apayer" class="empty hidden">Aucune facture en attente de paiement pour ce contrat.</div>
+            <#if facturesAPayer?size == 0>
+                <div class="empty">Aucune facture en attente de paiement pour ce contrat.</div>
+            </#if>
         </div>
     </div>
 
