@@ -652,6 +652,7 @@ public class Contrat {
     // =====================
 
 
+    // TODO: déplacer ces libellés directement dans les enums OffreTarifaire et ModeFacturation
     public String getLibelleOffreTarifaire(OffreTarifaire offreTarifaire) {
         if (offreTarifaire instanceof OffreClassique) {
             return "Classique";
@@ -666,5 +667,13 @@ public class Contrat {
             case REEL -> "Facturation mensuelle au réel";
             case ECHEANCIER -> "Échéancier";
         };
+    }
+
+    public String getLibelleOffre() {
+        return offreTarifaire instanceof OffreClassique ? "Classique" : "HP/HC";
+    }
+
+    public String getLibelleMode() {
+        return modeFacturation == ModeFacturation.REEL ? "Réel" : "Échéancier";
     }
 }
