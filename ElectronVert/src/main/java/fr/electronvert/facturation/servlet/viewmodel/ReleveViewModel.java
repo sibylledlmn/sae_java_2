@@ -4,6 +4,7 @@ public class ReleveViewModel {
 
     private final String date;
     private final String typeLibelle;
+    private final String contratRef;
 
     // Classique
     private final String indexTotal;
@@ -19,6 +20,7 @@ public class ReleveViewModel {
     public ReleveViewModel(String date, String typeLibelle, String indexTotal, String consoTotal) {
         this.date = date;
         this.typeLibelle = typeLibelle;
+        this.contratRef = null;
         this.indexTotal = indexTotal;
         this.consoTotal = consoTotal;
         this.indexHP = null;
@@ -33,6 +35,35 @@ public class ReleveViewModel {
                            String consoHP, String consoHC) {
         this.date = date;
         this.typeLibelle = typeLibelle;
+        this.contratRef = null;
+        this.indexTotal = null;
+        this.consoTotal = null;
+        this.indexHP = indexHP;
+        this.indexHC = indexHC;
+        this.consoHP = consoHP;
+        this.consoHC = consoHC;
+    }
+
+    // Constructeur Classique avec contratRef
+    public ReleveViewModel(String date, String typeLibelle, String contratRef, String indexTotal, String consoTotal) {
+        this.date = date;
+        this.typeLibelle = typeLibelle;
+        this.contratRef = contratRef;
+        this.indexTotal = indexTotal;
+        this.consoTotal = consoTotal;
+        this.indexHP = null;
+        this.indexHC = null;
+        this.consoHP = null;
+        this.consoHC = null;
+    }
+
+    // Constructeur HP/HC avec contratRef
+    public ReleveViewModel(String date, String typeLibelle, String contratRef,
+                           String indexHP, String indexHC,
+                           String consoHP, String consoHC) {
+        this.date = date;
+        this.typeLibelle = typeLibelle;
+        this.contratRef = contratRef;
         this.indexTotal = null;
         this.consoTotal = null;
         this.indexHP = indexHP;
@@ -43,6 +74,7 @@ public class ReleveViewModel {
 
     public String getDate() { return date; }
     public String getTypeLibelle() { return typeLibelle; }
+    public String getContratRef() { return contratRef; }
     public String getIndexTotal() { return indexTotal; }
     public String getConsoTotal() { return consoTotal; }
     public String getIndexHP() { return indexHP; }
