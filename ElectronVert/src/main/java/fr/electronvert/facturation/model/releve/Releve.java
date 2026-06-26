@@ -21,6 +21,7 @@ public class Releve implements Comparable<Releve> {
     // =====================
 
     private int id;
+    private int contratId;
 
     /**
      * Type de relevé (mensuel, clôture, etc.).
@@ -129,9 +130,11 @@ public class Releve implements Comparable<Releve> {
     }
 
     // Constructeur pour reconstruction depuis la BDD
-    public Releve(int id, TypeReleve typeReleve, LocalDate dateDeReleve, Map<TypeConso, Double> index) {
+
+    public Releve(int id, int contratId, TypeReleve typeReleve, LocalDate dateDeReleve, Map<TypeConso, Double> index) {
         this.id = id;
         this.contrat = null;
+        this.contratId = contratId;
         this.typeReleve = typeReleve;
         this.dateDeReleve = dateDeReleve;
         this.index = Map.copyOf(index);
@@ -143,6 +146,7 @@ public class Releve implements Comparable<Releve> {
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
+    public int getContratId() { return contratId; }
 
     public TypeReleve getTypeReleve() {
         return typeReleve;

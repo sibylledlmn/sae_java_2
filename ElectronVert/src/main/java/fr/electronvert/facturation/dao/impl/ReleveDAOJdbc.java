@@ -66,6 +66,25 @@ public class ReleveDAOJdbc implements ReleveDAO {
         return null;
     }
 
+    @Override
+    public List<Releve> findAllByClientId(int clientId) throws SQLException {
+        List<Releve> releves = new ArrayList<>();
+        String query = " SELECT r.* FROM releve r\n" +
+                "  JOIN contrat c ON r.contrat_id = c.id\n" +
+                "  WHERE c.client_id = ?\n" +
+                "  ORDER BY r.date_releve DESC\n";
+        try (Connection co = ConnectionManager.getConnection();
+        PreparedStatement ps = co.prepareStatement(query)){
+            ps.setInt(1, clientId);
+            try (ResultSet rs = ps.executeQuery()){
+                while (rs.next()) {
+                    releves.add(releveFromResultSet(rs));
+                }
+            }
+        }
+        return releves;
+    }
+
     private Releve releveFromResultSet(ResultSet rs) throws SQLException {
         Map<TypeConso, Double> index = new EnumMap<>(TypeConso.class);
         Double indexTotal = (Double) rs.getObject("index_total");
@@ -76,6 +95,7 @@ public class ReleveDAOJdbc implements ReleveDAO {
         if (indexHc != null) index.put(TypeConso.HC, indexHc);
         return new Releve(
                 rs.getInt("id"),
+                rs.getInt("contrat_id"),
                 TypeReleve.valueOf(rs.getString("type_releve")),
                 rs.getDate("date_releve").toLocalDate(),
                 index

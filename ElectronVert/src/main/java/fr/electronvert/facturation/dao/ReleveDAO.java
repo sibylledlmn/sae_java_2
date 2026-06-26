@@ -10,5 +10,6 @@ public interface ReleveDAO {
     int save(Releve releve, int contratId) throws SQLException;
     List<Releve> findByContractId(int contractId) throws SQLException;
     Releve findDernerByContractId(int contractId) throws SQLException;
+    List<Releve> findAllByClientId(int clientId) throws SQLException;
 
 }
