@@ -84,6 +84,24 @@ public class UtilisateurService {
 
     }
 
+    public ClientAdminViewModel getClientDetailAdmin(int clientId) throws SQLException {
+        Utilisateur u = utilisateurDAO.findById(clientId);
+        if (u == null) return null;
+        List<Contrat> contrats = contratDAO.findByClientId(clientId);
+        int nbActifs = (int) contrats.stream().filter(Contrat::estActif).count();
+        List<String> offres = contrats.stream()
+                .map(c -> c.getOffreTarifaire() instanceof OffreClassique ? "Classique" : "HP/HC")
+                .distinct()
+                .toList();
+        String dateInscription = contrats.stream()
+                .map(Contrat::getDateSouscription)
+                .min(LocalDate::compareTo)
+                .map(d -> d.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+                .orElse("—");
+        return new ClientAdminViewModel(u.getId(), u.getPrenom(), u.getNom(), u.getEmail(),
+                nbActifs, offres, dateInscription);
+    }
+
     public List<ClientAdminViewModel> getClientAdminParEmail(String email) throws SQLException{
         Utilisateur c = utilisateurDAO.findByEmail(email);
         List<ClientAdminViewModel> clientAdmins = new ArrayList<>();
