@@ -223,4 +223,49 @@ public class ContratDAOJdbc implements ContratDAO {
         );
     }
 
+    @Override
+    public List<Contrat> findByFiltres(String search, String statut, String offre, String mode) throws SQLException {
+        List<Contrat> contrats = new ArrayList<>();
+        StringBuilder query = new StringBuilder(
+                "SELECT c.*, u.id as u_id, u.nom, u.prenom, u.email, u.role " +
+                "FROM contrat c JOIN utilisateur u ON c.client_id = u.id WHERE 1=1"
+        );
+        List<Object> params = new ArrayList<>();
+
+        if (search != null && !search.isBlank()) {
+            query.append(" AND (CAST(c.id AS CHAR) LIKE ? OR u.email LIKE ?)");
+            String like = "%" + search + "%";
+            params.add(like);
+            params.add(like);
+        }
+        if (statut != null && !statut.isBlank()) {
+            query.append(" AND c.statut = ?");
+            params.add(statut);
+        }
+        if (offre != null && !offre.isBlank()) {
+            // En BDD l'offre est stockée comme le nom de la classe : "OffreClassique" ou "OffreHPHC"
+            String offreDb = offre.equals("CLASSIQUE") ? "OffreClassique" : "OffreHPHC";
+            query.append(" AND c.offre_tarifaire = ?");
+            params.add(offreDb);
+        }
+        if (mode != null && !mode.isBlank()) {
+            query.append(" AND c.mode_facturation = ?");
+            params.add(mode);
+        }
+
+        query.append(" ORDER BY c.date_souscription DESC");
+
+        try (Connection co = ConnectionManager.getConnection();
+             PreparedStatement ps = co.prepareStatement(query.toString())) {
+            for (int i = 1; i <= params.size(); i++) {
+                ps.setObject(i, params.get(i - 1));
+            }
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    contrats.add(contratFromResultSet(rs));
+                }
+            }
+        }
+        return contrats;
+    }
 }

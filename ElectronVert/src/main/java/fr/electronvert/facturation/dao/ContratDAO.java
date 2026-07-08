@@ -27,6 +27,8 @@ public interface ContratDAO {
 
     int nbContratsClotures() throws SQLException;
 
+   List<Contrat> findByFiltres(String search, String statut, String offre, String mode) throws SQLException;
+
 
 
 }
