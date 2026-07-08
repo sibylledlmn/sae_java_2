@@ -51,7 +51,7 @@
                 <tr><td colspan="5" style="text-align:center; color:#7a9a82; padding:24px;">Aucun client trouvé pour cette recherche.</td></tr>
             </#if>
             <#list clients as client>
-                <tr  data-recherche="${client.email?lower_case}">
+                <tr>
                     <td>
                         <div class="client-cell">
                             <div class="client-av" aria-hidden="true">ML</div>
